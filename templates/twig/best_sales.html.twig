@@ -1,0 +1,7 @@
+{% if(products|length > 0) %}
+    <ul>
+    {% for product in products %}
+        <li>{{ product.name }} ({{ product.price }} €)</li>
+    {% endfor %}
+    </ul>
+{% endif %}
