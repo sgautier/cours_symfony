@@ -1,0 +1,6 @@
+<img src="{{ gravatar('moi@example.com', 64) }}" alt="..."/>
+<img src="{{ gravatar('lui@example.com', 120, 'r') }}" alt="..."/>
+
+{% set text = "Ceci est un texte assez long avec lequel nous allons tester notre filtre" %}
+{{ text|truncate }}
+{{ text|truncate(15) }}
