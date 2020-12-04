@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Entity\Vehicle;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -63,6 +64,25 @@ class VehicleController extends AbstractController
         $em->flush();
 
         return new Response('<body>Aucun changement dans la base de données :)</body>');
+    }
+
+    /**
+     * @Route("/show/{id}", name="vehicle_show")
+     * @param $id
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function showAction($id, EntityManagerInterface $em)
+    {
+        // Préciser l'entité souhaitée. Remarque : la classe Repository n'a pas besoin d'exister
+        // find() attend l'ID permettant de charger l'entité
+        $vehicle = $em->getRepository('App:Vehicle')->find($id); // Ou $em->getRepository('App\Entity\Vehicle')
+
+        if(!$vehicle) {
+            throw $this->createNotFoundException("Véhicule non trouvé");
+        }
+
+        return new Response("<body>{$vehicle->getId()} {$vehicle->getPlate()}</body>");
     }
 
 }
