@@ -7,6 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity(repositoryClass=VehicleRepository::class)
+ * @ORM\Table(name="voiture")
  */
 class Vehicle
 {
@@ -18,27 +19,32 @@ class Vehicle
     private $id;
 
     /**
+     * @var string
      * @ORM\Column(type="string", length=10)
      */
     private $plate;
 
     /**
+     * @var integer
      * @ORM\Column(type="integer")
      */
     private $mileage;
 
     /**
+     * @var float
      * @ORM\Column(type="decimal", precision=8, scale=2, nullable=true)
      */
     private $price;
 
     /**
+     * @var string
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @var \DateTime
+     * @ORM\Column(type="datetime", name="manu_date")
      */
     private $manufactureDate;
 
