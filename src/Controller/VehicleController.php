@@ -85,4 +85,37 @@ class VehicleController extends AbstractController
         return new Response("<body>{$vehicle->getId()} {$vehicle->getPlate()}</body>");
     }
 
+    // TODO : continue HERE
+    /**
+     * @Route("/test-repository", name="vehicle_test_repository")
+     * @param EntityManagerInterface $em
+     * @return Response
+     */
+    public function testRepositoryAction(EntityManagerInterface $em)
+    {
+        // Charger un seul objet
+        $vehicle1 = $em->getRepository('App:Vehicle')->find(1);
+        $vehicle2 = $em->find('App:Vehicle', 1);
+
+        // Charger un seul objet correspondant aux critères donnés. Si plusieurs résultats, le premier est pris
+        $vehicle3 = $em->getRepository('App:Vehicle')->findOneBy(array('plate' => 'AB-123-CD', 'mileage' => 58000));
+
+        // Charger tous les objets
+        $vehicles1 = $em->getRepository('App:Vehicle')->findAll();
+
+        // Charger tous les objets correspondant aux critères donnés
+        $vehicles2 = $em->getRepository('App:Vehicle')->findBy(array('plate' => 'AB-123-CD', 'mileage' => 58000));
+
+        // Utilisation plus complète de findBy
+        $vehicles3 = $em->getRepository('App:Vehicle')->findBy(
+            array('plate' => 'AB-123-CD', 'mileage' => 58000), // Les critères de sélection
+            array('manufactureDate' => 'desc'), // Les critères de tri
+            5, // Le nombre de résultats
+            0 // Offset => 0 : commencer au premier résultat
+        );
+
+        dump($vehicle1, $vehicle2, $vehicle3, $vehicles1, $vehicles2, $vehicles3);
+        return new Response('<body></body>');
+    }
+
 }
