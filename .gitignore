@@ -8,3 +8,9 @@
 /var/
 /vendor/
 ###< symfony/framework-bundle ###
+
+# Include SQLite Database
+!/var/data.db
+
+# Ignore IDE settings
+.idea
