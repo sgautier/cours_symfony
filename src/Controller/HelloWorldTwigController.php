@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class HelloWorldTwigController extends AbstractController
 {
     #[Route('/twig')]
-    public function index(): Response
+    public function indexAction(): Response
     {
         return $this->render('hello_world.html.twig');
     }

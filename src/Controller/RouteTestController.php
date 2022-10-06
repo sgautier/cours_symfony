@@ -9,7 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class RouteTestController extends AbstractController
 {
     #[Route('/route/test', name: 'app_route_test')]
-    public function index(): Response
+    public function indexAction(): Response
     {
         return new Response('<body>Contenu de la réponse</body>');
     }
