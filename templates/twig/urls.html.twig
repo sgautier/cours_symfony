@@ -1,0 +1,9 @@
+<a href="{{ path('hello') }}">Lien vers page Hello World</a>
+<a href="{{ url('twig_conditions', {'stock': 5}) }}">Lien vers page des conditions Twig</a>
+<img alt="Mon image" src="{{ asset('images/logo.png') }}" />
+
+<ul>
+{% for url in urls %}
+    <li><a href="{{ url }}">{{ url }}</a></li>
+{% endfor %}
+</ul>
