@@ -1,0 +1,47 @@
+{{ 2+3 }}{# 5 #}<br>
+{{ 5-2 }}{# 3 #}<br>
+{{ 2*3 }}{# 6 #}<br>
+{{ 3/2 }}{# 1.5 #}<br>
+{{ 2**3 }}{# 8 #}<br>
+{{ 20//3 }}{# 6 : résultat de la division de 20 par 3 arrondi à l'entier inférieur #}<br>
+{{ 3%2 }}{# 1 (modulo) #}<br><br>
+
+{% if(1 and 1 or (0 and not(0 or 1))) %}Cette expression est vraie{% endif %}<br><br>
+
+{{ 12 b-or 9 }}<br>{# 1100 b-or 1001 ==> 1101 ==> 13 #}
+{{ 12 b-xor 9 }}<br>{# 1100 b-xor 1001 ==> 0101 ==> 5 #}
+{{ 12 b-and 9 }}<br><br>{# 1100 b-xor 1001 ==> 1000 ==> 8 #}
+
+{% set url = 'https://www.google.fr' %}
+{% set phone_number = '05.49.49.49.49' %}
+{% if url starts with 'https://' %}Oui l'URL commence par https://{% endif %}<br>
+{% if url ends with '.fr' %}Oui l'URL termine par .fr{% endif %}<br>
+{% if phone_number matches '/^[\\d\\.]+$/' %}Oui le numéro de téléphone est valide{% endif %}<br><br>
+
+{% set first_name = 'John' %}
+{% set last_name = 'Doe' %}
+{{ first_name ~ ' ' ~ last_name }}<br>
+{{ "Hello #{ first_name }" }}<br><br>
+
+{% set values = [1, 2, 4, 5] %}
+{% if 3 not in values %}Elément non trouvé{% endif %}<br><br>
+
+{% set login = 'my_login' %}
+{% set password = 'log' %}
+{% if password in login %}
+    Ne pas utiliser un mot de passe contenu dans le login !<br><br>
+{% endif %}
+
+{% set number = 11 %}
+{% if number is odd %}Nombre impair{% endif %}<br>
+{% if number is not divisible by(3) %}Nombre non divisible par 3{% endif %}<br><br>
+
+{% set number = 5 %}
+{% if number in 1..10 %}Oui 5 est compris entre 1 et 10{% endif %}<br>
+{% for letter in 'a'..'z' %}{{ letter }}{% endfor %}<br><br>
+
+{% set article = {"published": true, 'title': 'Harry Potter', 'author': null} %}
+{{ article.published ? 'yes' : 'no' }}<br>
+{{ article.author ?: 'Anonyme' }}<br>{# affiche article.author si renseigné, sinon "Anonyme" #}
+{{ article.title ? article.title }}<br>{# affiche article.title si renseigné, sinon rien #}
+{{ article.price ?? 19 }}<br><br>{# affiche article.price si défini et renseigné, sinon 0 #}

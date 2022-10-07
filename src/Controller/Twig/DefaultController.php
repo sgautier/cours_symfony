@@ -41,4 +41,9 @@ class DefaultController extends AbstractController
         return $this->render('twig/loop.html.twig');
     }
 
+    #[Route('/operators', name: 'twig_operators')]
+    public function operatorsAction(): Response
+    {
+        return $this->render('twig/operators.html.twig');
+    }
 }
