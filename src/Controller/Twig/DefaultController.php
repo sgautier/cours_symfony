@@ -55,4 +55,11 @@ class DefaultController extends AbstractController
         return $this->render('twig/tests.html.twig');
     }
 
+    #[Route('/inheritance', name: 'twig_inheritance')]
+    public function inheritanceAction(): Response
+    {
+        // Dans le contrôleur, on appelle le template fils
+        return $this->render('twig/inheritance/child.html.twig');
+    }
+
 }

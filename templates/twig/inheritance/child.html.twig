@@ -1,0 +1,30 @@
+{% extends 'twig/inheritance/parent.html.twig' %} {# Cette instruction DOIT être la première du template fils #}
+{# Un template ne peut hériter que d'un seul parent #}
+{# Il n'y a pas de contrainte de niveaux : un template peut hériter d’un parent qui hérite d'un autre etc. #}
+
+{# Il est possible de compléter un bloc déjà défini par le parent.
+   Si on ne fait pas appel à parent(), le contenu est remplacé #}
+{% block title %}Ma page - {{ parent() }}{% endblock %}
+
+{# Il est possible vider un bloc défini par le parent #}
+{% block h1 %}{% endblock %}
+
+{# Il est possible d'utiliser une notation raccourcie, sans le endblock #}
+{% block body_class 'my_class' %}
+
+{% block body %}
+    {# Il est possible d'inclure un template #}
+    {{ include('twig/inheritance/menu.html.twig') }}
+
+    {# Il est possible d'appeler via la fonction block() le contenu d'un bloc existant #}
+    <h2>{{ block('title') }}</h2>
+
+    Contenu de ma page
+
+    {# Il est possible de déclarer de nouveaux blocs qui pourront à leur tour être redéfinis par un template fils #}
+    {% block body_bottom %}Pied de page{% endblock %}
+{% endblock %}
+
+{# Il n'est pas obligatoire de redéfinir tous les blocs du parent #}
+
+{# Il est interdit d'écrire du contenu hors des balises block ==> erreur sinon #}
