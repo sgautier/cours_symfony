@@ -1,0 +1,12 @@
+{% set number = 10 %}
+{% set firstname = 'John' %}
+{% set tab = [1, 2, 3] %}
+{% if number is constant('\App\\Controller\\Twig\\DefaultController::TOTO') %}...{% endif %}<br>
+{% if lastname is defined %}{{ lastname }}{% endif %}<br>
+{% if firstname|length is divisible by(3) %}Divisible{% endif %}<br>
+{% if firstname is empty %}Empty{% endif %}<br>
+{% if number is even %}Pair{% endif %}<br>
+{% if number is odd %}Impair{% endif %}<br>
+{% if tab is iterable %}tab est itérable{% endif %}<br>
+{% if firstname is null %}null{% endif %}<br>
+{% if firstname is same as ('John') %}Egalité en valeur et en type (=== PHP){% endif %}

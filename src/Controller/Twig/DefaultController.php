@@ -9,6 +9,8 @@ use Symfony\Component\Routing\Annotation\Route;
 #[Route('/twig')]
 class DefaultController extends AbstractController
 {
+    const TOTO = 10;
+
     #[Route('/functions', name: 'twig_functions')]
     public function functionsAction(): Response
     {
@@ -46,4 +48,11 @@ class DefaultController extends AbstractController
     {
         return $this->render('twig/operators.html.twig');
     }
+
+    #[Route('/tests', name: 'twig_tests')]
+    public function testsAction(): Response
+    {
+        return $this->render('twig/tests.html.twig');
+    }
+
 }
