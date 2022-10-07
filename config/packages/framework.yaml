@@ -17,6 +17,9 @@ framework:
     php_errors:
         log: true
 
+    assets:
+        version: "v1"
+
 when@test:
     framework:
         test: true
