@@ -1,0 +1,14 @@
+{# Afficher une date correctement formatée #}
+{{ createdAt|date('d/m/Y') }}<br><br>
+
+{# Traitement de chaînes #}
+{{ name|lower }}<br>
+{{ name|upper }}<br>
+{{ name|capitalize }}<br>
+{{ name|title }}<br><br>
+
+{# Afficher une valeur si la variable n'est pas définie #}
+{{ author|default('No author') }}<br><br>
+
+{# Cumuler les filtres #}
+{{ tags|sort|join(', ') }}
