@@ -19,7 +19,9 @@ framework:
 
     assets:
         version: "v1"
-
+        base_urls:
+            - '%env(CDN_URL_1)%'
+            - '%env(CDN_URL_2)%'
 when@test:
     framework:
         test: true
