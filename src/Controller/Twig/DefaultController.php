@@ -74,4 +74,9 @@ class DefaultController extends AbstractController
         return $this->render('twig/macro/declaration_and_usage.html.twig');
     }
 
+    #[Route('/global-variable', name: 'twig_global_variable')]
+    public function globalVariableAction(): Response
+    {
+        return $this->render('twig/global_variable.html.twig');
+    }
 }
