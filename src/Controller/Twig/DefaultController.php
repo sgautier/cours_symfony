@@ -99,4 +99,9 @@ class DefaultController extends AbstractController
         return $this->render('twig/use_render.html.twig');
     }
 
+    #[Route('/extension', name: 'twig_extension')]
+    public function extensionAction(): Response
+    {
+        return $this->render('twig/extension.html.twig');
+    }
 }
