@@ -1,0 +1,12 @@
+{% set vars = [1, 2, 'test'] %}
+{% for var in vars %}
+    <li>{{ loop.index }} loop.index : affiche l'indice courant de l'itération (de 1 à 3)</li>
+    <li>{{ loop.index0 }} loop.index0 : affiche l'indice courant de l'itération (de 0 à 2)</li>
+    <li>{{ loop.revindex }} loop.revindex : affiche le nombre d'itérations restantes avant la fin (de 3 à 1)</li>
+    <li>{{ loop.revindex0 }} loop.revindex0 : affiche le nombre d'itérations restantes avant la fin (de 2 à 0)</li>
+    <li>{{ loop.first }} loop.first : booléen vrai seulement à la première itération</li>
+    <li>{{ loop.last }} loop.last : booléen vrai seulement à la dernière itération</li>
+    <li>{{ loop.length }} loop.length : nombre total d'itérations (3)</li>
+    <li>loop.parent : objet correspondant au contexte parent</li>
+    <li>---</li>
+{% endfor %}

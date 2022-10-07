@@ -34,4 +34,11 @@ class DefaultController extends AbstractController
         }
         return $this->render('twig/conditions-for.html.twig', ['products' => $products]);
     }
+
+    #[Route('/loop', name: 'twig_loop')]
+    public function loopAction(): Response
+    {
+        return $this->render('twig/loop.html.twig');
+    }
+
 }
