@@ -1,0 +1,6 @@
+{% set start_year = date() | date('Y') %}
+{% set end_year = start_year + 5 %}
+
+{% for year in start_year..end_year %}
+    {{ cycle(['odd', 'even'], year) }} - {{ year }}<br>
+{% endfor %}
