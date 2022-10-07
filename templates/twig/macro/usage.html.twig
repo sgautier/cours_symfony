@@ -1,0 +1,7 @@
+{% import "twig/macro/declaration.html.twig" as utils %}
+<form>
+    {{ utils.input('firstname') }}
+    {{ utils.input('lastname') }}
+    {{ utils.input('login') }}
+    {{ utils.input('password', null, 'password') }}
+</form>

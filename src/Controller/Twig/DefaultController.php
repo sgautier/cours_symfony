@@ -62,4 +62,16 @@ class DefaultController extends AbstractController
         return $this->render('twig/inheritance/child.html.twig');
     }
 
+    #[Route('/macro', name: 'twig_macro')]
+    public function macroAction(): Response
+    {
+        return $this->render('twig/macro/usage.html.twig');
+    }
+
+    #[Route('/macro-bis', name: 'twig_macro_bis')]
+    public function macroBisAction(): Response
+    {
+        return $this->render('twig/macro/declaration_and_usage.html.twig');
+    }
+
 }

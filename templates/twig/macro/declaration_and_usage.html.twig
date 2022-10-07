@@ -1,0 +1,13 @@
+{% macro input(name, value, type='text', size=20) %}
+    <input type="{{ type }}"
+           name="{{ name }}"
+           value="{{ value|escape }}"
+           size="{{ size }}">
+{% endmacro %}
+{% import _self as utils %}
+<form>
+    {{ utils.input('firstname') }}
+    {{ utils.input('lastname') }}
+    {{ utils.input('login') }}
+    {{ utils.input('password', null, 'password') }}
+</form>
