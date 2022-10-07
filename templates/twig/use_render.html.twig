@@ -1,0 +1,8 @@
+<p>Ceci est un template classique</p>
+
+{{ render(controller(
+    'App\\Controller\\Twig\\RenderExampleController::bestSalesAction',
+    { 'nbProducts': 3 }
+)) }}
+
+<p>On y fait ce qu'on veut</p>

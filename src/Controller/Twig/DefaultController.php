@@ -93,4 +93,10 @@ class DefaultController extends AbstractController
         return $this->render('twig/urls.html.twig', ['urls' => $urls]);
     }
 
+    #[Route('/render', name: 'twig_render')]
+    public function renderAction(): Response
+    {
+        return $this->render('twig/use_render.html.twig');
+    }
+
 }
