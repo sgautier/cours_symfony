@@ -14,4 +14,24 @@ class DefaultController extends AbstractController
     {
         return $this->render('twig/functions.html.twig');
     }
+
+    #[Route('/conditions/{stock}', name: 'twig_conditions')]
+    public function conditionsAction($stock): Response
+    {
+        return $this->render('twig/conditions.html.twig', ['stock' => $stock]);
+    }
+
+    #[Route('/conditions-for/{nbProducts}', name: 'twig_conditions_for')]
+    public function conditionsForAction($nbProducts): Response
+    {
+        $products = [];
+        for ($i=1 ; $i<=$nbProducts ; $i++) {
+            $products[] = [
+                'name' => "Produit $i",
+                'description' => "Description $i",
+                'active' => (boolean)rand(0, 1),
+            ];
+        }
+        return $this->render('twig/conditions-for.html.twig', ['products' => $products]);
+    }
 }

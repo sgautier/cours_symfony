@@ -1,0 +1,8 @@
+{% for product in products %}
+    {% if product.active %}
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+    {% endif %}
+{% else %}
+    Aucun produit disponible
+{% endfor %}

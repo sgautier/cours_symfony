@@ -1,0 +1,9 @@
+{% if stock > 10 %}
+    Produit en stock
+{% elseif stock > 1 %}
+    Plus que {{ stock }} produits disponibles
+{% elseif stock == 1 %}
+    Dernier produit disponible
+{% else %}
+    Produit épuisé
+{% endif %}
