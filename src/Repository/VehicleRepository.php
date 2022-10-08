@@ -4,6 +4,8 @@ namespace App\Repository;
 
 use App\Entity\Vehicle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\QueryBuilder;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +21,125 @@ class VehicleRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Vehicle::class);
+    }
+
+    public function oneMethodInMyRepository(): void
+    {
+        // Solution 1 :
+        $queryBuilder = $this->_em->createQueryBuilder() // Créer un query builder vide
+            ->select('v') // Préciser quelles colonnes sélectionner (toute ici)
+            ->from($this->_entityName, 'v'); // Préciser sur quelle entité
+
+        dump($queryBuilder);
+
+        // Solution 2 équivalente à privilégier !
+        $queryBuilder = $this->createQueryBuilder('v');
+
+        dump($queryBuilder);
+
+        // ... suite de notre méthode
+    }
+
+    public function myFindAll(): mixed
+    {
+        // Récupération du QueryBuilder ==> select * from vehicle
+        $queryBuilder = $this->createQueryBuilder('v');
+
+        // Pas besoin d'autres critères car on veut tout récupérer
+
+        // Récupération de la Query à partir du QueryBuilder
+        $query = $queryBuilder->getQuery();
+
+        // Récupération des résultats à partir de la Query
+        $results = $query->getResult();
+
+        return $results;
+    }
+
+    // La même chose sans commentaires ni variables inutiles
+    public function myFindAllBis(): mixed
+    {
+        return $this->createQueryBuilder('v')
+            ->getQuery()
+            ->getResult();
+    }
+
+    public function myFind($id): mixed
+    {
+        $qb = $this->createQueryBuilder('v')
+            // Ajout d'une contrainte sur la propriété id de l'entité v
+            ->where('v.id = :my_id')
+            // Attribution de la valeur au paramètre (id reçu en paramètre)
+            ->setParameter('my_id', $id)
+        ;
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByMileageAndYear($mileageMin, $mileageMax, $year): mixed
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->where('v.mileage >= :mileage_min')
+            ->setParameter('mileage_min', $mileageMin)
+            ->andWhere('v.mileage <= :mileage_max')
+            ->setParameter('mileage_max', $mileageMax)
+            ->andWhere('v.manufactureDate BETWEEN :begin AND :end')
+            ->setParameter('begin', new \DateTime($year . '-01-01'))
+            ->setParameter('end', new \DateTime($year . '-12-31'))
+        ;
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByMileageAndYearBis($mileageMin, $mileageMax, $year): mixed
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->where('v.mileage >= :mileage_min')
+            ->setParameter('mileage_min', $mileageMin)
+            ->andWhere('v.mileage <= :mileage_max')
+            ->setParameter('mileage_max', $mileageMax);
+        $this->whereYear($qb, $year);
+        return $qb->getQuery()->getResult();
+    }
+
+    public function findByPriceAndYear($priceMin, $priceMax, $year): mixed
+    {
+        $qb = $this->createQueryBuilder('v')
+            ->where('v.price >= :price_min')
+            ->setParameter('price_min', $priceMin)
+            ->andWhere('v.price <= :price_max')
+            ->setParameter('price_max', $priceMax);
+        $this->whereYear($qb, $year);
+        return $qb->getQuery()->getResult();
+    }
+
+    public function whereYear(QueryBuilder $qb, $year): void
+    {
+        $qb
+            ->andWhere('v.manufactureDate BETWEEN :begin AND :end')
+            ->setParameter('begin', new \DateTime($year . '-01-01'))
+            ->setParameter('end', new \DateTime($year . '-12-31'));
+    }
+
+    public function myFindAllDql(): mixed
+    {
+        return $this->_em->createQuery("SELECT v FROM App:Vehicle v")->getResult();
+    }
+
+    public function myFindDql($id): mixed
+    {
+        $query = $this->_em->createQuery("SELECT v FROM App:Vehicle v WHERE v.id = :id");
+        $query->setParameter('id', $id);
+        return $query->getResult();
+    }
+
+    public function myFindAllWithPaging($currentPage, $nbPerPage): Paginator
+    {
+        $query = $this->createQueryBuilder('v')
+            ->getQuery()
+            ->setFirstResult(($currentPage - 1) * $nbPerPage) // Premier élément de la page
+            ->setMaxResults($nbPerPage); // Nombre d'éléments par page
+
+        // Equivalent de getResult() mais un count() sur cet objet retourne le nombre de résultats hors pagination
+        return new Paginator($query);
     }
 
     public function save(Vehicle $entity, bool $flush = false): void
