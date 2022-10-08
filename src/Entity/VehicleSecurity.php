@@ -25,6 +25,9 @@ class VehicleSecurity
     #[ORM\Column]
     private ?bool $esp = null;
 
+    #[ORM\OneToOne(mappedBy: 'vehicleSecurity', cascade: ['persist', 'remove'])]
+    private ?Vehicle $vehicle = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -74,6 +77,28 @@ class VehicleSecurity
     public function setEsp(bool $esp): self
     {
         $this->esp = $esp;
+
+        return $this;
+    }
+
+    public function getVehicle(): ?Vehicle
+    {
+        return $this->vehicle;
+    }
+
+    public function setVehicle(?Vehicle $vehicle): self
+    {
+        // unset the owning side of the relation if necessary
+        if ($vehicle === null && $this->vehicle !== null) {
+            $this->vehicle->setVehicleSecurity(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($vehicle !== null && $vehicle->getVehicleSecurity() !== $this) {
+            $vehicle->setVehicleSecurity($this);
+        }
+
+        $this->vehicle = $vehicle;
 
         return $this;
     }

@@ -30,6 +30,9 @@ class Vehicle
     #[ORM\Column(name: 'manu_date', type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $manufactureDate = null;
 
+    #[ORM\OneToOne(inversedBy: 'vehicle', cascade: ['persist', 'remove'])]
+    private ?VehicleSecurity $vehicleSecurity = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -91,6 +94,18 @@ class Vehicle
     public function setManufactureDate(\DateTimeInterface $manufactureDate): self
     {
         $this->manufactureDate = $manufactureDate;
+
+        return $this;
+    }
+
+    public function getVehicleSecurity(): ?VehicleSecurity
+    {
+        return $this->vehicleSecurity;
+    }
+
+    public function setVehicleSecurity(?VehicleSecurity $vehicleSecurity): self
+    {
+        $this->vehicleSecurity = $vehicleSecurity;
 
         return $this;
     }
