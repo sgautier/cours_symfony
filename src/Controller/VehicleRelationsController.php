@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Vehicle;
+use App\Entity\VehicleEquipment;
 use App\Entity\VehicleModel;
 use App\Entity\VehicleSecurity;
 use Doctrine\ORM\EntityManagerInterface;
@@ -93,6 +94,26 @@ class VehicleRelationsController extends AbstractController
         // Remarque : findByModel() n'existe pas ==> rappel : méthode magique
         $vehicles = $em->getRepository(Vehicle::class)->findByVehicleModel($m);
         dump($vehicles);
+        return new Response('<body></body>');
+    }
+
+    #[Route('/add-many-to-many', name: 'vehicle_relations_add_many_to_many')]
+    public function testAddRelationManyToManyAction(EntityManagerInterface $em): Response
+    {
+        // Création d'un véhicule ayant tous les équipements existants :
+        $equipments = $em->getRepository(VehicleEquipment::class)->findAll();
+        $vehicle = new Vehicle();
+        $vehicle
+            ->setPrice(6700)
+            ->setPlate('AZ-529-BJ')
+            ->setMileage(159000)
+            ->setManufactureDate(new \DateTime('2010-05-12'))
+            ->setDescription('');
+        foreach ($equipments as $equipment) {
+            $vehicle->addEquipment($equipment);
+        }
+        $em->persist($vehicle);
+        $em->flush();
         return new Response('<body></body>');
     }
 
