@@ -33,6 +33,9 @@ class Vehicle
     #[ORM\OneToOne(inversedBy: 'vehicle', cascade: ['persist', 'remove'])]
     private ?VehicleSecurity $vehicleSecurity = null;
 
+    #[ORM\ManyToOne(inversedBy: 'vehicles')]
+    private ?VehicleModel $vehicleModel = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -106,6 +109,18 @@ class Vehicle
     public function setVehicleSecurity(?VehicleSecurity $vehicleSecurity): self
     {
         $this->vehicleSecurity = $vehicleSecurity;
+
+        return $this;
+    }
+
+    public function getVehicleModel(): ?VehicleModel
+    {
+        return $this->vehicleModel;
+    }
+
+    public function setVehicleModel(?VehicleModel $vehicleModel): self
+    {
+        $this->vehicleModel = $vehicleModel;
 
         return $this;
     }
