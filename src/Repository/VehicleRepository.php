@@ -181,6 +181,18 @@ class VehicleRepository extends ServiceEntityRepository
             ->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneByPlateWithModel(string $plate)
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.plate=:plate')->setParameter('plate', $plate)
+            ->leftJoin('v.vehicleModel', 'm')
+            ->addSelect('m')
+            ->getQuery()->getOneOrNullResult();
+    }
+
     public function save(Vehicle $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);

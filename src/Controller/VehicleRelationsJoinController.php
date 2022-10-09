@@ -37,4 +37,24 @@ class VehicleRelationsJoinController extends AbstractController
         dump($vehicle->getVehicleSecurity()->getAirbagNumber());
         return new Response('<body></body>');
     }
+
+    #[Route('/many-to-one-no-join', name: 'many_to_one_no_join')]
+    public function testManyToOneNoJoinAction(EntityManagerInterface $em): Response
+    {
+        $vehicle = $em->getRepository(Vehicle::class)->findOneByPlate('GA-928-GZ');
+        // Le fait d'accéder à une propriété de l'entité VehicleModel déclenche la seconde requête
+        dump($vehicle->getVehicleModel()->getName());
+        return new Response('<body></body>');
+    }
+
+    #[Route('/many-to-one-with-join', name: 'many_to_one_with_join')]
+    public function testManyToOneWithJoinAction(EntityManagerInterface $em): Response
+    {
+        $vehicle = $em->getRepository(Vehicle::class)->findOneByPlateWithModel('GA-928-GZ');
+        // Cette fois-ci, Doctrine n'a pas besoin d'exécuter une seconde requête car
+        // il "connaît" les données de VehicleModel
+        dump($vehicle->getVehicleModel()->getName());
+        return new Response('<body></body>');
+    }
+
 }
