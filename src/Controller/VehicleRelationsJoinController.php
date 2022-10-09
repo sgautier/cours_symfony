@@ -61,8 +61,7 @@ class VehicleRelationsJoinController extends AbstractController
     #[Route('/one-to-many-no-join', name: 'one_to_many_no_join')]
     public function testOneToManyNoJoinAction(EntityManagerInterface $em): Response
     {
-        $model = $em->getRepository(VehicleModel::class)
-            ->findOneByName('3008');
+        $model = $em->getRepository(VehicleModel::class)->findOneByName('3008');
         foreach ($model->getVehicles() as $vehicle) {
             dump($vehicle);
         }
@@ -72,12 +71,31 @@ class VehicleRelationsJoinController extends AbstractController
     #[Route('/one-to-many-with-join', name: 'one_to_many_with_join')]
     public function testOneToManyWithJoinAction(EntityManagerInterface $em): Response
     {
-        $model = $em->getRepository(VehicleModel::class)
-            ->findOneByNameWithVehicles('3008');
+        $model = $em->getRepository(VehicleModel::class)->findOneByNameWithVehicles('3008');
         foreach ($model->getVehicles() as $vehicle) {
             dump($vehicle);
         }
         return new Response('<body></body>');
     }
 
+
+    #[Route('/many-to-many-no-join', name: 'many_to_many_no_join')]
+    public function testManyToManyNoJoinAction(EntityManagerInterface $em): Response
+    {
+        $vehicle = $em->getRepository(Vehicle::class)->findOneByPlate('AZ-529-BJ');
+        foreach ($vehicle->getEquipments() as $equipment) {
+            dump($equipment);
+        }
+        return new Response('<body></body>');
+    }
+
+    #[Route('/many-to-many-with-join', name: 'many_to_many_with_join')]
+    public function testManyToManyWithJoinAction(EntityManagerInterface $em): Response
+    {
+        $vehicle = $em->getRepository(Vehicle::class)->findOneByPlateWithEquipments('AZ-529-BJ');
+        foreach ($vehicle->getEquipments() as $equipment) {
+            dump($equipment);
+        }
+        return new Response('<body></body>');
+    }
 }

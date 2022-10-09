@@ -184,12 +184,26 @@ class VehicleRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneByPlateWithModel(string $plate)
+    public function findOneByPlateWithModel(string $plate): mixed
     {
         return $this->createQueryBuilder('v')
             ->where('v.plate=:plate')->setParameter('plate', $plate)
             ->leftJoin('v.vehicleModel', 'm')
             ->addSelect('m')
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneByPlateWithEquipments(string $plate): mixed
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.plate=:plate')->setParameter('plate', $plate)
+            // Noter que ce leftJoin() génère en fait
+            // 2 jointures au niveau SQL
+            ->leftJoin('v.equipments', 'e')
+            ->addSelect('e')
             ->getQuery()->getOneOrNullResult();
     }
 
