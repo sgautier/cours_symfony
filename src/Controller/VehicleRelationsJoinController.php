@@ -78,7 +78,6 @@ class VehicleRelationsJoinController extends AbstractController
         return new Response('<body></body>');
     }
 
-
     #[Route('/many-to-many-no-join', name: 'many_to_many_no_join')]
     public function testManyToManyNoJoinAction(EntityManagerInterface $em): Response
     {
@@ -95,6 +94,36 @@ class VehicleRelationsJoinController extends AbstractController
         $vehicle = $em->getRepository(Vehicle::class)->findOneByPlateWithEquipments('AZ-529-BJ');
         foreach ($vehicle->getEquipments() as $equipment) {
             dump($equipment);
+        }
+        return new Response('<body></body>');
+    }
+
+    #[Route('/many-to-many-with-attributes-no-join', name: 'many_to_many_with_attributes_no_join')]
+    public function testManyToManyWithAttributesNoJoinAction(EntityManagerInterface $em): Response
+    {
+        $vehicle = $em->getRepository(Vehicle::class)->findOneByPlate('AZ-529-BJ');
+        foreach ($vehicle->getVehicleToVehicleRepairs() as $vehicleToVehicleRepair) {
+            dump($vehicleToVehicleRepair->getVehicleRepair()->getDescription());
+        }
+        return new Response('<body></body>');
+    }
+
+    #[Route('/many-to-many-with-attributes-with-one-join', name: 'many_to_many_with_attributes_with_one_join')]
+    public function testManyToManyWithAttributesWithOneJoinAction(EntityManagerInterface $em): Response
+    {
+        $vehicle = $em->getRepository(Vehicle::class)->findOneByPlateWithVehicleToVehicleRepair('AZ-529-BJ');
+        foreach ($vehicle->getVehicleToVehicleRepairs() as $vehicleToVehicleRepair) {
+            dump($vehicleToVehicleRepair->getVehicleRepair()->getDescription());
+        }
+        return new Response('<body></body>');
+    }
+
+    #[Route('/many-to-many-with-attributes-with-two-joins', name: 'many_to_many_with_attributes_with_two_joins')]
+    public function testManyToManyWithAttributesWithTwoJoinsAction(EntityManagerInterface $em): Response
+    {
+        $vehicle = $em->getRepository(Vehicle::class)->findOneByPlateWithVehicleToVehicleRepairAndVehicleRepair('AZ-529-BJ');
+        foreach ($vehicle->getVehicleToVehicleRepairs() as $vehicleToVehicleRepair) {
+            dump($vehicleToVehicleRepair->getVehicleRepair()->getDescription());
         }
         return new Response('<body></body>');
     }

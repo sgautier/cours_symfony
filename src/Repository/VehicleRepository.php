@@ -207,6 +207,33 @@ class VehicleRepository extends ServiceEntityRepository
             ->getQuery()->getOneOrNullResult();
     }
 
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneByPlateWithVehicleToVehicleRepair(string $plate)
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.plate=:plate')->setParameter('plate', $plate)
+            ->leftJoin('v.vehicleToVehicleRepairs', 'vvr')
+            ->addSelect('vvr')
+            ->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneByPlateWithVehicleToVehicleRepairAndVehicleRepair(string $plate)
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.plate=:plate')->setParameter('plate', $plate)
+            ->leftJoin('v.vehicleToVehicleRepairs', 'vvr')
+            ->addSelect('vvr')
+            // Seconde jointure en INNER car on est certain d'avoir une réparation dès lors qu'on a une association
+            ->innerJoin('vvr.vehicleRepair', 'vr')
+            ->addSelect('vr')
+            ->getQuery()->getOneOrNullResult();
+    }
+
     public function save(Vehicle $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
