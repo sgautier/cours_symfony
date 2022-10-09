@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\VehicleModel;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -19,6 +20,18 @@ class VehicleModelRepository extends ServiceEntityRepository
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, VehicleModel::class);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneByNameWithVehicles(string $name): mixed
+    {
+        return $this->createQueryBuilder('m')
+            ->where('m.name = :name')->setParameter('name', $name)
+            ->leftJoin('m.vehicles', 'v')
+            ->addSelect('v')
+            ->getQuery()->getOneOrNullResult();
     }
 
     public function save(VehicleModel $entity, bool $flush = false): void

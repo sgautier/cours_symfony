@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\Vehicle;
+use App\Entity\VehicleModel;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -54,6 +55,28 @@ class VehicleRelationsJoinController extends AbstractController
         // Cette fois-ci, Doctrine n'a pas besoin d'exécuter une seconde requête car
         // il "connaît" les données de VehicleModel
         dump($vehicle->getVehicleModel()->getName());
+        return new Response('<body></body>');
+    }
+
+    #[Route('/one-to-many-no-join', name: 'one_to_many_no_join')]
+    public function testOneToManyNoJoinAction(EntityManagerInterface $em): Response
+    {
+        $model = $em->getRepository(VehicleModel::class)
+            ->findOneByName('3008');
+        foreach ($model->getVehicles() as $vehicle) {
+            dump($vehicle);
+        }
+        return new Response('<body></body>');
+    }
+
+    #[Route('/one-to-many-with-join', name: 'one_to_many_with_join')]
+    public function testOneToManyWithJoinAction(EntityManagerInterface $em): Response
+    {
+        $model = $em->getRepository(VehicleModel::class)
+            ->findOneByNameWithVehicles('3008');
+        foreach ($model->getVehicles() as $vehicle) {
+            dump($vehicle);
+        }
         return new Response('<body></body>');
     }
 
