@@ -5,7 +5,9 @@ namespace App\Controller;
 use App\Entity\Vehicle;
 use App\Entity\VehicleEquipment;
 use App\Entity\VehicleModel;
+use App\Entity\VehicleRepair;
 use App\Entity\VehicleSecurity;
+use App\Entity\VehicleToVehicleRepair;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -118,7 +120,7 @@ class VehicleRelationsController extends AbstractController
     }
 
     #[Route('/remove-many-to-many', name: 'vehicle_relations_remove_many_to_many')]
-    public function testRemoveRelationManyToManyAction(EntityManagerInterface $em)
+    public function testRemoveRelationManyToManyAction(EntityManagerInterface $em): Response
     {
         $vehicle = $em->getRepository(Vehicle::class)
             ->findOneByPlate('AZ-529-BJ');
@@ -133,4 +135,43 @@ class VehicleRelationsController extends AbstractController
         return new Response('<body></body>');
     }
 
+    #[Route('/add-many-to-many-with-attributes', name: 'vehicle_relations_add_many_to_many_with_attributes')]
+    public function testAddRelationManyToManyAttributeAction(EntityManagerInterface $em): Response
+    {
+        // Ajout de types de réparation
+        $repairs = new VehicleRepair();
+        $repairs->setDescription('Forfait vidange')->setPrice(149);
+        $em->persist($repairs);
+        $repairs2 = new VehicleRepair();
+        $repairs2->setDescription('Forfait montage / équilibrage 4 pneus')->setPrice(49);
+        $em->persist($repairs2);
+
+        // Réparations sur un véhicule existant :
+        $vehicle = $em->getRepository(Vehicle::class)->findOneByPlate('AZ-529-BJ');
+
+        // Ajout des associations
+        $link = new VehicleToVehicleRepair();
+        $link->setDate(new \DateTime('2018-01-03'))->setVehicle($vehicle)->setVehicleRepair($repairs);
+        $em->persist($link);
+        $link2 = new VehicleToVehicleRepair(); // La même réparation à une autre date !
+        $link2->setDate(new \DateTime('2020-01-12'))->setVehicle($vehicle)->setVehicleRepair($repairs);
+        $em->persist($link2);
+        $link3 = new VehicleToVehicleRepair();
+        $link3->setDate(new \DateTime('2018-01-04'))->setVehicle($vehicle)->setVehicleRepair($repairs2);
+        $em->persist($link3);
+
+        $em->flush();
+        return new Response('<body></body>');
+    }
+
+    #[Route('/many-to-many-with-attributes-test-load', name: 'vehicle_relations_many_to_many_with_attributes_test_load')]
+    public function testLoadRelationsInManyToManyWithAttributesBisAction(EntityManagerInterface $em): Response
+    {
+        $vehicle = $em->getRepository(Vehicle::class)->findOneByPlate('AZ-529-BJ');
+
+        // Chargement de tous les VehicleToVehicleRepair associés à ce véhicule
+        $links = $em->getRepository(VehicleToVehicleRepair::class)->findBy(['vehicle' => $vehicle]);
+
+        return $this->render('vehicle/list_repairs.html.twig', ['vehicle' => $vehicle, 'links' => $links]);
+    }
 }

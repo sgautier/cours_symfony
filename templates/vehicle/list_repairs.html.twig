@@ -1,0 +1,17 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+<h1>{{ vehicle.plate }}</h1>
+Le véhicule a {{ vehicle.mileage }} km.
+{% if links|length %}
+    <ul>
+        {% for link in links %}
+            {# Important : link.vehicleRepairs génère une requête à chaque itération car à ce stade, la réparation
+               n'a pas été chargée ==> pas très efficace.
+               A l'inverse, link.date ne génère pas de requête car la donnée est stockée dans l'association. #}
+            <li>Réparation du {{ link.date|date('d/m/Y') }} : {{ link.vehicleRepair.description }}</li>
+        {% endfor %}
+    </ul>
+{% else %}
+    Le véhicule n'a jamais été réparé
+{% endif %}
+{% endblock %}
