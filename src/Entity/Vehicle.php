@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\VehicleRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -35,6 +37,15 @@ class Vehicle
 
     #[ORM\ManyToOne(inversedBy: 'vehicles')]
     private ?VehicleModel $vehicleModel = null;
+
+    #[ORM\ManyToMany(targetEntity: VehicleEquipment::class, inversedBy: 'vehicles')]
+    #[ORM\JoinTable(name: 'asso_vehicle_equipment')]
+    private Collection $equipments;
+
+    public function __construct()
+    {
+        $this->equipments = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -121,6 +132,30 @@ class Vehicle
     public function setVehicleModel(?VehicleModel $vehicleModel): self
     {
         $this->vehicleModel = $vehicleModel;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VehicleEquipment>
+     */
+    public function getEquipments(): Collection
+    {
+        return $this->equipments;
+    }
+
+    public function addEquipment(VehicleEquipment $equipment): self
+    {
+        if (!$this->equipments->contains($equipment)) {
+            $this->equipments->add($equipment);
+        }
+
+        return $this;
+    }
+
+    public function removeEquipment(VehicleEquipment $equipment): self
+    {
+        $this->equipments->removeElement($equipment);
 
         return $this;
     }
