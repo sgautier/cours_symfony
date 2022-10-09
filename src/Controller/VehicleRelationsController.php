@@ -117,4 +117,20 @@ class VehicleRelationsController extends AbstractController
         return new Response('<body></body>');
     }
 
+    #[Route('/remove-many-to-many', name: 'vehicle_relations_remove_many_to_many')]
+    public function testRemoveRelationManyToManyAction(EntityManagerInterface $em)
+    {
+        $vehicle = $em->getRepository(Vehicle::class)
+            ->findOneByPlate('AZ-529-BJ');
+        foreach ($vehicle->getEquipments() as $key => $equipment) {
+            // Ne supprimer qu'un équipement sur 2, c'est juste pour l'exercice :)
+            if($key % 2 == 0) {
+                continue;
+            }
+            $vehicle->removeEquipment($equipment);
+        }
+        $em->flush();
+        return new Response('<body></body>');
+    }
+
 }
