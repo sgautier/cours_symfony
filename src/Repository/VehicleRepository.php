@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Vehicle;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
@@ -140,6 +141,44 @@ class VehicleRepository extends ServiceEntityRepository
 
         // Equivalent de getResult() mais un count() sur cet objet retourne le nombre de résultats hors pagination
         return new Paginator($query);
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneByPlateWithSecurity(string $plate): mixed
+    {
+        return
+            // SELECT v.* FROM vehicle v
+            $this->createQueryBuilder('v')
+                // WHERE v.plate = $plate
+                ->where('v.plate=:plate')->setParameter('plate', $plate)
+
+                // LEFT JOIN vehicle_security s ON v.vehicle_security_id = s.id
+                ->leftJoin('v.vehicleSecurity', 's')
+                // 1er paramètre de leftJoin() : propriété de l'entité principale (celle qui est définie dans le FROM,
+                // en l'occurrence Vehicle) sur laquelle la jointure se fait => Vehicle a bien la propriété vehicleSecurity
+                // 2ème argument de leftJoin() : alias de l'entité jointe utilisé dans la requête
+                // On fait un LEFT JOIN car la relation est facultative. Sinon, on ferait un INNER JOIN
+
+                // Ajoute s.* au SELECT
+                // On utilise addSelect() car select() remplace tout ce qui est dans le SELECT
+                ->addSelect('s')
+
+                // Le résultat ou null si pas de résultat
+                ->getQuery()->getOneOrNullResult();
+    }
+
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function findOneByPlateWithSecurityAnd4Stars(string $plate): mixed
+    {
+        return $this->createQueryBuilder('v')
+            ->where('v.plate=:plate')->setParameter('plate', $plate)
+            ->leftJoin('v.vehicleSecurity', 's', 'WITH', 's.euroNcapStars >= 4')
+            ->addSelect('s')
+            ->getQuery()->getOneOrNullResult();
     }
 
     public function save(Vehicle $entity, bool $flush = false): void
