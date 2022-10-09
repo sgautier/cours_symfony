@@ -42,9 +42,13 @@ class Vehicle
     #[ORM\JoinTable(name: 'asso_vehicle_equipment')]
     private Collection $equipments;
 
+    #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: VehicleToVehicleRepair::class)]
+    private Collection $vehicleToVehicleRepairs;
+
     public function __construct()
     {
         $this->equipments = new ArrayCollection();
+        $this->vehicleToVehicleRepairs = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -156,6 +160,36 @@ class Vehicle
     public function removeEquipment(VehicleEquipment $equipment): self
     {
         $this->equipments->removeElement($equipment);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, VehicleToVehicleRepair>
+     */
+    public function getVehicleToVehicleRepairs(): Collection
+    {
+        return $this->vehicleToVehicleRepairs;
+    }
+
+    public function addVehicleToVehicleRepair(VehicleToVehicleRepair $vehicleToVehicleRepair): self
+    {
+        if (!$this->vehicleToVehicleRepairs->contains($vehicleToVehicleRepair)) {
+            $this->vehicleToVehicleRepairs->add($vehicleToVehicleRepair);
+            $vehicleToVehicleRepair->setVehicle($this);
+        }
+
+        return $this;
+    }
+
+    public function removeVehicleToVehicleRepair(VehicleToVehicleRepair $vehicleToVehicleRepair): self
+    {
+        if ($this->vehicleToVehicleRepairs->removeElement($vehicleToVehicleRepair)) {
+            // set the owning side to null (unless already changed)
+            if ($vehicleToVehicleRepair->getVehicle() === $this) {
+                $vehicleToVehicleRepair->setVehicle(null);
+            }
+        }
 
         return $this;
     }
