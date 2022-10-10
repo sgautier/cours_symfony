@@ -3,7 +3,7 @@ namespace App\Twig\Extension;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 
-class Gravatar extends AbstractExtension
+class GravatarExtension extends AbstractExtension
 {
     public function getFunctions(): array
     {

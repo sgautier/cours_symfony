@@ -3,7 +3,7 @@ namespace App\Twig\Extension;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFilter;
 
-class Truncate extends AbstractExtension
+class TruncateExtension extends AbstractExtension
 {
     public function getFilters(): array
     {
