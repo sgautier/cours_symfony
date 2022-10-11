@@ -3,6 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\Tire;
+use App\Entity\Vehicle;
+use App\Entity\VehicleEquipment;
+use App\Entity\VehicleModel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +19,32 @@ class ValidatorController extends AbstractController
     {
         // Le validateur est injecté dans le constructeur
         $tire = new Tire();
-        dump($validator->validate($tire));
+        $validator->validate($tire);
+        return new Response('<body></body>');
+    }
+
+    #[Route('/equipment', name: 'equipment')]
+    public function testValidateEquipmentAction(ValidatorInterface $validator): Response
+    {
+        $equipment = (new VehicleEquipment())
+            ->setName('Vitres teintées')
+            ->setDescription('Vitres teintées');
+        ;
+        $validator->validate($equipment);
+        return new Response('<body></body>');
+    }
+
+    #[Route('/vehicle', name: 'vehicle')]
+    public function testValidateVehicleAction(ValidatorInterface $validator): Response
+    {
+        $equipment = new VehicleEquipment();
+        $model = new VehicleModel();
+        $vehicle = (new Vehicle())
+            ->setPlate('FV-619-NZ')
+            ->setVehicleModel($model)
+            ->addEquipment($equipment)
+        ;
+        $validator->validate($vehicle);
         return new Response('<body></body>');
     }
 }
