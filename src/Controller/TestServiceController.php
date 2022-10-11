@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\MailerWithSenderLogger;
+use App\Service\ServiceToTestCalls;
 use App\Service\ServiceWithOptionalServiceInParameter;
 use App\Service\TestScalar;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -40,6 +41,13 @@ class TestServiceController extends AbstractController
     public function testServiceWithOptionalServiceInParameterAction(ServiceWithOptionalServiceInParameter $service): Response
     {
         dump($service->getFormatterClassname());
+        return new Response('<body></body>');
+    }
+
+    #[Route('/test-service-calls', name: 'test_service_calls')]
+    public function testServiceCallsAction(ServiceToTestCalls $service): Response
+    {
+        $service->myMethod();
         return new Response('<body></body>');
     }
 }

@@ -64,3 +64,9 @@ services:
         arguments:
             # Mettre le "?" après le "@" permet d'éviter une exception
             - '@?App\Service\UnFormatterQuiNExistePas'
+
+    App\Service\ServiceToTestCalls:
+        calls:
+            - ['myMethod']
+            - ['mySecondMethod', [123, 'toto']]
+            - ['myOtherMethod', ['@App\Service\LoggerDumper']]
