@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\TireRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: TireRepository::class)]
 class Tire
@@ -14,10 +15,25 @@ class Tire
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: 'Le nom de la marque est obligatoire')]
+    #[Assert\Length(max: 64)]
     private ?string $brandName = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank]
+    #[Assert\Range(
+        minMessage: 'Le prix ne peut pas être inférieur à 1€',
+        maxMessage: 'Le prix ne peut pas être supérieur à 1000€',
+        min: 1,
+        max: 1000,
+    )]
     private ?float $price = null;
+
+    #[Assert\IsTrue(message: "Le prix n'est pas valide")]
+    public function isPriceValid()
+    {
+        return is_float($this->price) && $this->price > 0;
+    }
 
     public function getId(): ?int
     {

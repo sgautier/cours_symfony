@@ -7,9 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
 #[ORM\Table(name: 'voiture')]
+#[UniqueEntity(fields: ['plate'], message: "Il existe déjà un véhicule avec cette plaque d'immatriculation")]
 class Vehicle
 {
     #[ORM\Id]
@@ -17,7 +20,7 @@ class Vehicle
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column(length: 10)]
+    #[ORM\Column(length: 10, unique: true)]
     private ?string $plate = null;
 
     #[ORM\Column]
@@ -36,10 +39,12 @@ class Vehicle
     private ?VehicleSecurity $vehicleSecurity = null;
 
     #[ORM\ManyToOne(inversedBy: 'vehicles')]
+    #[Assert\Valid]
     private ?VehicleModel $vehicleModel = null;
 
     #[ORM\ManyToMany(targetEntity: VehicleEquipment::class, inversedBy: 'vehicles')]
     #[ORM\JoinTable(name: 'asso_vehicle_equipment')]
+    #[Assert\Valid]
     private Collection $equipments;
 
     #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: VehicleToVehicleRepair::class)]
