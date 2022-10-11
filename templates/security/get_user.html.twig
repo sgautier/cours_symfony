@@ -1,0 +1,14 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {{ dump(app.user) }} {# Permet de dumper l'objet User #}
+    {{ app.user.email }} {# Permet d'afficher la propriété email de l'utilisateur #}
+
+    <p>Affiché pour tous</p>
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>Affiché seulement pour les utilisateurs qui ont le rôle ROLE_ADMIN</p>
+    {% endif %}
+
+    <p>Affiché pour tous</p>
+{% endblock %}
