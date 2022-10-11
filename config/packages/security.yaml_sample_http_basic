@@ -1,0 +1,49 @@
+security:
+    # https://symfony.com/doc/current/security.html#registering-the-user-hashing-passwords
+    password_hashers: # Les password_hashers fournissent les stratégies d'encodage des mots de passe
+        Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface: 'plaintext' # aucun encodage
+    # https://symfony.com/doc/current/security.html#loading-the-user-the-user-provider
+    providers: # Les providers décrivent comment récupérer ou créer des utilisateurs
+        users_in_memory: # Nom arbitraire pour le provider
+            memory: # Mes utilisateurs sont stockés dans la mémoire
+                users:
+                    john: # john est le login
+                        password: doe # doe est le mot de passe
+                        roles: ROLE_USER # rôle : nom arbitraire qui commence par convention par "ROLE_". Un utilisateur peut avoir plusieurs rôles.
+                    admin:
+                        password: admin
+                        roles: ROLE_ADMIN
+    firewalls: # Les firewalls définissent le mécanisme d'authentification utilisé dans chaque partie de l'application
+        # L'ordre des firewalls est important : le premier pour lequel l'URL courante correspond est pris en compte
+        dev: # Chaque firewall a un nom arbitraire
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false # Toutes les URLs qui matchent la regexp ne sont pas sécurisées
+        main:
+            lazy: true
+            provider: users_in_memory # Quels utilisateurs sont concernés ?
+            http_basic: ~ # Toutes les URLs qui matchent la regexp sont sécurisées avec authentification basique HTTP
+
+            # activate different ways to authenticate
+            # https://symfony.com/doc/current/security.html#the-firewall
+
+            # https://symfony.com/doc/current/security/impersonating_user.html
+            # switch_user: true
+
+    # Easy way to control access for large sections of your site
+    # Note: Only the *first* access control that matches will be used
+    access_control:
+        - { path: ^/admin, roles: ROLE_ADMIN } # Pour tout l'admin du site, le rôle ROLE_ADMIN est requis
+        - { path: ^/profile, roles: ROLE_USER } # Pour toute URL profile/*, le rôle ROLE_USER est requis
+
+when@test:
+    security:
+        password_hashers:
+            # By default, password hashers are resource intensive and take time. This is
+            # important to generate secure password hashes. In tests however, secure hashes
+            # are not important, waste resources and increase test times. The following
+            # reduces the work factor to the lowest possible values.
+            Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface:
+                algorithm: auto
+                cost: 4 # Lowest possible value for bcrypt
+                time_cost: 3 # Lowest possible value for argon
+                memory_cost: 10 # Lowest possible value for argon
