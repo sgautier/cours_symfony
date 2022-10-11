@@ -43,13 +43,13 @@ class ThisIsMyAccountController extends AbstractController
         if (!$this->isGranted('ROLE_ADMIN')) {
             throw new AccessDeniedException("Vous ne passerez pas !");
         }
-        return new Response("<body>Cette action génère exception si l'utilisateur n'est pas ROLE_ADMIN</body>");
+        return new Response("<body>Cette action génère une exception si l'utilisateur n'est pas ROLE_ADMIN</body>");
     }
 
     #[Route('/test-deny-bis', name: 'this_is_my_account_test_deny_bis')]
     public function testDenyBisAction(): Response
     {
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "Vous ne passerez pas !");
-        return new Response("<body>Cette action génère exception si l'utilisateur n'est pas ROLE_ADMIN</body>");
+        return new Response("<body>Cette action génère une exception si l'utilisateur n'est pas ROLE_ADMIN</body>");
     }
 }
