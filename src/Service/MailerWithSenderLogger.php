@@ -16,12 +16,14 @@ class MailerWithSenderLogger implements MailerInterface
 {
     private MailerInterface $mailer;
     private LoggerInterface $logger;
+    private string $logMessage;
 
     // Notre service a besoin d'un Logger et d'un Mailer car il doit quand même effectuer un envoi d'email !
-    public function __construct(MailerInterface $mailer, LoggerInterface $logger)
+    public function __construct(MailerInterface $mailer, LoggerInterface $logger, string $logMessage)
     {
         $this->mailer = $mailer;
         $this->logger = $logger;
+        $this->logMessage = $logMessage;
     }
 
     public function send(RawMessage $message, Envelope $envelope = null): void
@@ -31,7 +33,7 @@ class MailerWithSenderLogger implements MailerInterface
 
         // On logue qui a effectué l'envoi de l'email
         $this->logger->info(
-            "Un email a été envoyé par : " . implode(
+            $this->logMessage . implode(
                 ', ',
                 array_map(
                     fn(Address $from): string => $from->toString(),

@@ -4,6 +4,7 @@
 # Put parameters here that don't need to change on each machine where the app is deployed
 # https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
 parameters:
+    mailer_logger_message: 'Un email a été envoyé par : '
 
 services:
     # default configuration for services in *this* file
@@ -30,6 +31,7 @@ services:
         arguments:
             - '@mailer'
             - '@App\Service\LoggerDumper'
+            - '%mailer_logger_message%'
 
     # On précise que le service LoggerDumper a besoin d'un service :
     # - '@App\Service\JsonFormatter' : notre Formatter JSON => mais on peut mettre n'importe quel Formatter ici !
