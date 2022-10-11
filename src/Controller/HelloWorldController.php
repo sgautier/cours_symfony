@@ -12,7 +12,7 @@ class HelloWorldController extends AbstractController
     #[Route('/')]
     public function indexAction(): Response
     {
-        return new Response('Hello World !');
+        return new Response('<body>Hello World !</body>');
     }
 
     #[Route('/hello', name: 'hello')]
