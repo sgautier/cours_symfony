@@ -22,8 +22,7 @@ class Tire
     #[ORM\Column]
     #[Assert\NotBlank]
     #[Assert\Range(
-        minMessage: 'Le prix ne peut pas être inférieur à 1€',
-        maxMessage: 'Le prix ne peut pas être supérieur à 1000€',
+        notInRangeMessage: 'Le prix doit être compris entre 1€ et 1000€',
         min: 1,
         max: 1000,
     )]
