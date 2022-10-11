@@ -54,6 +54,14 @@ class DefaultController extends AbstractController
         return $this->redirectToRoute('hello');
     }
 
+    #[Route('/test-redirect-with-param')]
+    public function testRedirectWithParamAction(): RedirectResponse
+    {
+        return $this->redirectToRoute('display_results', [
+            'page' => 123,
+        ]);
+    }
+
     #[Route('/test-response-json')]
     public function sendJsonAction(): JsonResponse
     {
