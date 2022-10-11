@@ -39,6 +39,11 @@ services:
 #            $logger: '@App\Service\LoggerDumper'
 #            $logMessage: '%mailer_logger_message%'
 
+    mon_mailer:
+        alias: 'App\Service\MailerWithSenderLogger'
+
+    mon_mailer_bis: '@App\Service\MailerWithSenderLogger'
+
     # On précise que le service LoggerDumper a besoin d'un service :
     # - '@App\Service\JsonFormatter' : notre Formatter JSON => mais on peut mettre n'importe quel Formatter ici !
     App\Service\LoggerDumper:
