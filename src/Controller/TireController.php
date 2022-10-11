@@ -8,6 +8,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -39,7 +40,7 @@ class TireController extends AbstractController
     }
 
     #[Route('/add-bis', name: 'add_bis')]
-    public function addBisAction()
+    public function addBisAction(): Response
     {
         // Aucun changement pour la création de l'objet
         $tire = new Tire();
@@ -56,4 +57,29 @@ class TireController extends AbstractController
         ]);
     }
 
+    #[Route('/add-full', name: 'add_full')]
+    public function addTireAction(Request $request): Response
+    {
+        $tire = new Tire();
+        $form = $this->createForm(TireType::class, $tire);
+        $form->add('send', SubmitType::class, ['label' => 'Add a new tire']);
+        $form->handleRequest($request); // Alimentation du formulaire avec la Request
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            // Le formulaire vient d'être soumis et il est valide => $tire est hydraté avec les données saisies
+
+            // Traitement des données du formulaire...
+
+            return $this->redirectToRoute('tire_add_success');
+        }
+
+        // Affichage du formulaire initial (requête GET) OU affichage du formulaire avec erreurs après validation (requête POST)
+        return $this->render('tire/form.html.twig', ['form' => $form->createView()]);
+    }
+
+    #[Route('/add/success', name: 'add_success')]
+    public function addTireSuccessAction(): Response
+    {
+        return $this->render('tire/success.html.twig');
+    }
 }
