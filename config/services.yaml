@@ -22,3 +22,17 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # On précise que le service MailerWithSenderLogger a besoin de 2 services :
+    # - '@mailer' : le service fourni par Symfony permettant d'envoyer des emails
+    # - '@App\Service\LoggerDumper' : notre LoggerDumper => mais on peut mettre n'importe quel Logger ici !
+    App\Service\MailerWithSenderLogger:
+        arguments:
+            - '@mailer'
+            - '@App\Service\LoggerDumper'
+
+    # On précise que le service LoggerDumper a besoin d'un service :
+    # - '@App\Service\JsonFormatter' : notre Formatter JSON => mais on peut mettre n'importe quel Formatter ici !
+    App\Service\LoggerDumper:
+        arguments:
+            - '@App\Service\JsonFormatter'
