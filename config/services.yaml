@@ -38,3 +38,6 @@ services:
     App\Service\LoggerDumper:
         arguments:
             - '@App\Service\JsonFormatter'
+
+    App\Service\TestScalar:
+        arguments: [ 'ma chaîne de caractères', 123 ]

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\MailerWithSenderLogger;
+use App\Service\TestScalar;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Mime\Email;
@@ -24,6 +25,13 @@ class TestServiceController extends AbstractController
             ->html('<strong>Ceci est un contenu HTML</strong>')
         ;
         $mailer->send($email);
+        return new Response('<body></body>');
+    }
+
+    #[Route('/test-only-scalar', name: 'test_only_scalar')]
+    public function testServiceWithOnlyScalarArgumentsAction(TestScalar $testScalar): Response
+    {
+        dump((string)$testScalar);
         return new Response('<body></body>');
     }
 }
