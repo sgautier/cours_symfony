@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Service\MailerWithSenderLogger;
+use App\Service\ServiceWithOptionalServiceInParameter;
 use App\Service\TestScalar;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -32,6 +33,13 @@ class TestServiceController extends AbstractController
     public function testServiceWithOnlyScalarArgumentsAction(TestScalar $testScalar): Response
     {
         dump((string)$testScalar);
+        return new Response('<body></body>');
+    }
+
+    #[Route('/test-optional-service-parameter', name: 'test_optional_serv_ce_parameter')]
+    public function testServiceWithOptionalServiceInParameterAction(ServiceWithOptionalServiceInParameter $service): Response
+    {
+        dump($service->getFormatterClassname());
         return new Response('<body></body>');
     }
 }
