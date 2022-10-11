@@ -1,0 +1,26 @@
+{{ form_start(form) }}
+{# Affiche la balise <form>, définit les attributs action et method + si nécessaire l'attribut enctype #}
+
+{{ form_errors(form) }}
+{# Affiche les erreurs globales du formulaire #}
+
+{{ form_row(form.brandName) }}
+{# Affiche le champ de manière complète : label + widget (code HTML du champ) + erreurs associées au champ s'il y en a #}
+
+<div>
+    {{ form_label(form.price) }}
+    {# Affiche uniquement le label du champ #}
+
+    {{ form_errors(form.price) }}
+    {# Affiche les erreurs associées au champ s'il y en a #}
+
+    {{ form_widget(form.price) }}
+    {# Affiche le widget (code HTML du champ) #}
+</div>
+
+{{ form_rest(form) }}
+{# Affiche tous les champs non explicitement affichés précédemment #}
+
+{{ form_end(form) }}
+{# Affiche la balise fermante </form> et surtout chaque champ qui n'a pas été explicitement affiché (sauf si form_rest()
+   a déjà été utilisé) ==> Utile notamment pour le champ CSRF qui n'est jamais explicitement affiché #}
