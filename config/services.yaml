@@ -33,6 +33,12 @@ services:
             - '@App\Service\LoggerDumper'
             - '%mailer_logger_message%'
 
+    # Alternative : comme @mailer peut être déterminé autimatiquement par Symfony, on peut ne pas le préciser
+#    App\Service\MailerWithSenderLogger:
+#        arguments:
+#            $logger: '@App\Service\LoggerDumper'
+#            $logMessage: '%mailer_logger_message%'
+
     # On précise que le service LoggerDumper a besoin d'un service :
     # - '@App\Service\JsonFormatter' : notre Formatter JSON => mais on peut mettre n'importe quel Formatter ici !
     App\Service\LoggerDumper:
@@ -40,4 +46,11 @@ services:
             - '@App\Service\JsonFormatter'
 
     App\Service\TestScalar:
-        arguments: [ 'ma chaîne de caractères', 123 ]
+        arguments:
+            - 'ma chaîne de caractères'
+            - 123
+            - !php/const App\MyClassSomewhere::MY_CONSTANT
+            -
+                key1: val1
+                key2: val2
+                key3: val3
