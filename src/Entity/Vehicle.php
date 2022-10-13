@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: VehicleRepository::class)]
 #[ORM\Table(name: 'voiture')]
+#[ORM\HasLifecycleCallbacks]
 #[UniqueEntity(fields: ['plate'], message: "Il existe déjà un véhicule avec cette plaque d'immatriculation")]
 class Vehicle
 {
@@ -54,6 +55,15 @@ class Vehicle
     {
         $this->equipments = new ArrayCollection();
         $this->vehicleToVehicleRepairs = new ArrayCollection();
+    }
+
+    #[ORM\PrePersist]
+    public function forceDescription()
+    {
+        if(is_null($this->description)) {
+            // Uniquement si la description n'est pas renseignée, en définir une
+            $this->description = "Le véhicule {$this->plate} a {$this->mileage} km";
+        }
     }
 
     public function getId(): ?int
