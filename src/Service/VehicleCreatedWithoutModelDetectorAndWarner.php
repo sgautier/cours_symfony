@@ -17,7 +17,7 @@ class VehicleCreatedWithoutModelDetectorAndWarner
         $this->vehicleWithoutModelMailer = $vehicleWithoutModelMailer;
     }
 
-    public function postPersist(LifecycleEventArgs $args)
+    public function postPersist(LifecycleEventArgs $args): void
     {
         // La méthode doit porter le nom de l'évènement déclaré dans services.yaml
         // Noter que le paramètre LifecycleEventArgs permet également d'accéder à l'EntityManager

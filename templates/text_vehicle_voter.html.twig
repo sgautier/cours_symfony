@@ -1,0 +1,6 @@
+<body>
+<h1>Véhicule {{ vehicle.plate }}</h1>
+{% if is_granted('edit', vehicle) %}
+    <a href="{{ path('test_vehicle_voter_edit') }}">Editer le véhicule</a>
+{% endif %}
+</body>

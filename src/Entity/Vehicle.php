@@ -51,6 +51,9 @@ class Vehicle
     #[ORM\OneToMany(mappedBy: 'vehicle', targetEntity: VehicleToVehicleRepair::class)]
     private Collection $vehicleToVehicleRepairs;
 
+    #[ORM\ManyToOne(inversedBy: 'vehicles')]
+    private ?User $user = null;
+
     public function __construct()
     {
         $this->equipments = new ArrayCollection();
@@ -205,6 +208,18 @@ class Vehicle
                 $vehicleToVehicleRepair->setVehicle(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getUser(): ?User
+    {
+        return $this->user;
+    }
+
+    public function setUser(?User $user): self
+    {
+        $this->user = $user;
 
         return $this;
     }

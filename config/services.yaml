@@ -80,3 +80,13 @@ services:
     App\Service\VehicleCreatedWithoutModelDetectorAndWarnerSubscriber:
         tags:
             - { name: doctrine.event_subscriber }
+
+    App\Service\VehicleSaveUser:
+        tags:
+            - { name: doctrine.event_subscriber }
+
+    # La déclaration du service n'est pas nécessaire si autoconfigure: true
+    # Sinon, le service doit être déclaré avec le tag security.voter
+#    App\Security\Voter\VehicleVoter:
+#        tags:
+#            - { name: security.voter }
