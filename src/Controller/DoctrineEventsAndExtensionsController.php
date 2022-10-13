@@ -40,4 +40,14 @@ class DoctrineEventsAndExtensionsController extends AbstractController
         $em->flush();
         return new Response('<body></body>');
     }
+
+    #[Route('/test-slug')]
+    public function testSlugAction(EntityManagerInterface $em): Response
+    {
+        $model = new VehicleModel();
+        $model->setName('Mégane')->setMake('Renault');
+        $em->persist($model);
+        $em->flush();
+        return new Response('<body></body>');
+    }
 }
