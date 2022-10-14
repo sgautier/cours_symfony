@@ -50,4 +50,16 @@ class DoctrineEventsAndExtensionsController extends AbstractController
         $em->flush();
         return new Response('<body></body>');
     }
+
+    #[Route('/test-post-load')]
+    public function testDoctrinePostLoadEventAction(EntityManagerInterface $em): Response
+    {
+        $em->getRepository(Vehicle::class)->find(1);
+        $em->getRepository(Vehicle::class)->findOneBy(['plate' => 'DK-721-MA']);
+        $em->getRepository(Vehicle::class)->findOneByPlate('BA-011-NJ');
+        $em->getRepository(Vehicle::class)->myFind(7);
+        $em->getRepository(Vehicle::class)->myFindDql(8);
+        $em->getRepository(Vehicle::class)->findOneByPlateWithSecurity('EB-423-MA');
+        return new Response('<body></body>');
+    }
 }

@@ -69,6 +69,12 @@ class Vehicle
         }
     }
 
+    #[ORM\PostLoad]
+    public function testPostLoad()
+    {
+        dump('Je passe dans le testPostLoad');
+    }
+
     public function getId(): ?int
     {
         return $this->id;
