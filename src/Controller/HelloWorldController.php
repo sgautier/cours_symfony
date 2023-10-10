@@ -19,6 +19,6 @@ class HelloWorldController extends AbstractController
     public function helloWorldBisAction(Request $request): Response
     {
         dump($request->query->get('toto'));
-        return new Response('Hello World !');
+        return new Response('<body>Hello World !</body>');
     }
 }
