@@ -15,7 +15,7 @@ class VehicleController extends AbstractController
     public function addAction(EntityManagerInterface $entityManager): Response
     {
         $vehicle = new Vehicle();
-        $vehicle->setPlate('AB-333-CD')->setMileage(58000)->setPrice(19999.99)
+        $vehicle->setPlate('AB-123-CD')->setMileage(58000)->setPrice(19999.99)
             ->setManufactureDate(new \DateTime('2017-11-24'))->setDescription('Très belle voiture');
 
         // Dire à Doctrine qu'a priori l'objet devra être sauvegardé en base de données (pas de requête pour le moment)
