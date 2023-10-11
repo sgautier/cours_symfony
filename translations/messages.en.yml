@@ -1,4 +1,5 @@
 One term to translate: One term to translate
 One term <strong>with HTML</strong> to translate: One term <strong>with HTML</strong> to translate
+My name is %name%: My name is %name%
 header:
     welcome: Welcome on my website

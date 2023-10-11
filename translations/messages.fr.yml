@@ -1,4 +1,5 @@
 One term to translate: Un terme à traduire
 One term <strong>with HTML</strong> to translate: Un terme <strong>avec HTML</strong> à traduire
+My name is %name%: Je m'appelle %name%
 header:
     welcome: Bienvenue sur mon site

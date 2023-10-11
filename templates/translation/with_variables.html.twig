@@ -1,0 +1,3 @@
+{{ 'My name is %name%'|trans({'%name%': 'John'}) }}<br>
+
+{% trans with {'%name%': 'John'} %}My name is %name%{% endtrans %}
