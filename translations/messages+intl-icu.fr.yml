@@ -1,1 +1,28 @@
 welcome_message: Bienvenue {name} !
+invitation_title: >-
+    {organizer_gender, select,
+        female   {{guest_gender, select,
+                     female   {{organizer_name} vous a invitée à sa fête !}
+                     male     {{organizer_name} vous a invité à sa fête !}
+                     multiple {{organizer_name} vous a invités à sa fête !}
+                     other    {{organizer_name} vous a invité à sa fête !}
+                 }}
+        male     {{guest_gender, select,
+                      female   {{organizer_name} vous a invitée à sa fête !}
+                      male     {{organizer_name} vous a invité à sa fête !}
+                      multiple {{organizer_name} vous a invités à sa fête !}
+                      other    {{organizer_name} vous a invité à sa fête !}
+                  }}
+        multiple {{guest_gender, select,
+                      female   {{organizer_name} vous ont invitée à leur fête !}
+                      male     {{organizer_name} vous ont invité à leur fête !}
+                      multiple {{organizer_name} vous ont invités à leur fête !}
+                      other    {{organizer_name} vous ont invité à leur fête !}
+                  }}
+        other    {{guest_gender, select,
+                       female   {{organizer_name} vous a invitée à sa fête !}
+                       male     {{organizer_name} vous a invité à sa fête !}
+                       multiple {{organizer_name} vous a invités à sa fête !}
+                       other    {{organizer_name} vous a invité à sa fête !}
+                  }}
+    }

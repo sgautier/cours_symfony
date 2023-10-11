@@ -88,4 +88,43 @@ class TranslationTestController extends AbstractController
         $labelEn = $translator->trans('welcome_message', ['name' => 'John'], 'messages', 'en');
         return new Response("<body>Traduction : $labelFr / $labelEn</body>");
     }
+
+    #[Route('/icu-condition', name: 'icu_condition')]
+    public function icuCondition(TranslatorInterface $translator): Response
+    {
+        $labelFrMaleFemale = $translator->trans('invitation_title', [
+            'organizer_name' => 'Ryan',
+            'organizer_gender' => 'male',
+            'guest_gender' => 'female',
+        ]);
+        $labelEnMale = $translator->trans('invitation_title', [
+            'organizer_name' => 'Ryan',
+            'organizer_gender' => 'male',
+        ], 'messages', 'en');
+
+        $labelFrMultipleFemale = $translator->trans('invitation_title', [
+            'organizer_name' => 'John & Jane',
+            'organizer_gender' => 'multiple',
+            'guest_gender' => 'female',
+        ]);
+        $labelEnMultiple = $translator->trans('invitation_title', [
+            'organizer_name' => 'John & Jane',
+            'organizer_gender' => 'multiple',
+        ], 'messages', 'en');
+
+        $labelFrOtherFemale = $translator->trans('invitation_title', [
+            'organizer_name' => 'ACME Company',
+            'organizer_gender' => 'not_applicable',
+            'guest_gender' => 'female',
+        ]);
+        $labelEnOther = $translator->trans('invitation_title', [
+            'organizer_name' => 'ACME Company',
+            'organizer_gender' => 'not_applicable',
+        ], 'messages', 'en');
+
+        // Ne faites JAMAIS ce que je fais ci-dessous, c'est pour l'exemple !
+        return new Response("<body>Traductions : <ul><li>$labelFrMaleFemale / $labelEnMale</li>
+                                        <li>$labelFrMultipleFemale / $labelEnMultiple</li>
+                                        <li>$labelFrOtherFemale / $labelEnOther</li></ul></body>");
+    }
 }

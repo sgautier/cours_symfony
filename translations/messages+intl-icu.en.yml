@@ -1,1 +1,9 @@
 welcome_message: Welcome {name}!
+# La clé "other" est obligatoire, elle est utilisée quand aucun autre cas ne matche
+invitation_title: >-
+    {organizer_gender, select,
+        female   {{organizer_name} has invited you to her party!}
+        male     {{organizer_name} has invited you to his party!}
+        multiple {{organizer_name} have invited you to their party!}
+        other    {{organizer_name} has invited you to their party!}
+    }
