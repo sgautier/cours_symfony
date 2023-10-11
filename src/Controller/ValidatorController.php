@@ -29,7 +29,7 @@ class ValidatorController extends AbstractController
         $equipment = (new VehicleEquipment())
             ->setName('Vitres teintées')
             ->setDescription('Vitres teintées');
-        ;
+
         $validator->validate($equipment);
         return new Response('<body></body>');
     }
@@ -42,8 +42,7 @@ class ValidatorController extends AbstractController
         $vehicle = (new Vehicle())
             ->setPlate('FV-619-NZ')
             ->setVehicleModel($model)
-            ->addEquipment($equipment)
-        ;
+            ->addEquipment($equipment);
         $validator->validate($vehicle);
         return new Response('<body></body>');
     }
