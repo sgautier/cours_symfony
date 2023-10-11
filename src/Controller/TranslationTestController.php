@@ -76,8 +76,16 @@ class TranslationTestController extends AbstractController
     }
 
     #[Route('/with-variables-twig', name: 'with_variables_twig')]
-    public function testWithVariablesTwig(TranslatorInterface $translator): Response
+    public function testWithVariablesTwig(): Response
     {
         return $this->render('translation/with_variables.html.twig');
+    }
+
+    #[Route('/icu-variable', name: 'icu_variable')]
+    public function icuVariable(TranslatorInterface $translator): Response
+    {
+        $labelFr = $translator->trans('welcome_message', ['name' => 'John']);
+        $labelEn = $translator->trans('welcome_message', ['name' => 'John'], 'messages', 'en');
+        return new Response("<body>Traduction : $labelFr / $labelEn</body>");
     }
 }
