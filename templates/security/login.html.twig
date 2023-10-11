@@ -15,6 +15,18 @@
     {% endif %}
 
     <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    <script>
+        function initFields(login, password) {
+            document.getElementById('inputEmail').value = login;
+            document.getElementById('inputPassword').value = password;
+            return false;
+        }
+    </script>
+    <ul>
+        <li><a href="#" onclick="return initFields('user@example.com', 'user')">user@example.com / user</a></li>
+        <li><a href="#" onclick="return initFields('admin@example.com', 'admin')">admin@example.com / user</a></li>
+        <li><a href="#" onclick="return initFields('owner@example.com', 'owner')">owner@example.com / user</a></li>
+    </ul>
     <label for="inputEmail">Email</label>
     <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" autocomplete="email" required autofocus>
     <label for="inputPassword">Password</label>
