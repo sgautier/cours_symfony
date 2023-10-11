@@ -22,4 +22,10 @@ class TranslationTestController extends AbstractController
     {
         return new Response("<body>{$service->getMessage()}</body>");
     }
+
+    #[Route('/from-twig', name: 'from_twig')]
+    public function fromTwig(): Response
+    {
+        return $this->render('translation/example.html.twig');
+    }
 }
