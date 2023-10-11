@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Service\TestTranslationService;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Contracts\Translation\TranslatorInterface;
@@ -27,5 +28,22 @@ class TranslationTestController extends AbstractController
     public function fromTwig(): Response
     {
         return $this->render('translation/example.html.twig');
+    }
+
+    #[Route('/get-locale', name: 'get_locale')]
+    public function testGetLocale(Request $request): Response
+    {
+        // Récupération de la locale courante
+        $locale = $request->getLocale();
+        return new Response("<body>Locale courante : $locale</body>");
+    }
+
+    #[Route('/get-locale-bis/{_locale}', name: 'get_locale_bis')]
+    public function testGetLocaleBis(Request $request): Response
+    {
+        // Récupération de la locale transmise en GET
+        // Possibilité de restreindre les valeurs possibles (cf. requirements pour la route)
+        $locale = $request->getLocale();
+        return new Response("<body>Locale courante : $locale</body>");
     }
 }
