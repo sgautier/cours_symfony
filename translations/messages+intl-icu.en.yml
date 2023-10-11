@@ -7,3 +7,9 @@ invitation_title: >-
         multiple {{organizer_name} have invited you to their party!}
         other    {{organizer_name} has invited you to their party!}
     }
+num_of_apples: >-
+    {apples, plural,
+        =0    {There are no apples}
+        =1    {There is one apple...}
+        other {There are # apples!}
+    }

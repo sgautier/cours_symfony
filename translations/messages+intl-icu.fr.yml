@@ -26,3 +26,9 @@ invitation_title: >-
                        other    {{organizer_name} vous a invité à sa fête !}
                   }}
     }
+num_of_apples: >-
+    {apples, plural,
+        =0    {Il n'y a aucune pomme}
+        =1    {Il y a une pomme...}
+        other {Il y a # pommes !}
+    }

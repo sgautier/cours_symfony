@@ -127,4 +127,17 @@ class TranslationTestController extends AbstractController
                                         <li>$labelFrMultipleFemale / $labelEnMultiple</li>
                                         <li>$labelFrOtherFemale / $labelEnOther</li></ul></body>");
     }
+
+    #[Route('/icu-plural', name: 'icu_plural')]
+    public function icuPlural(TranslatorInterface $translator): Response
+    {
+        $labelFr0 = $translator->trans('num_of_apples', ['apples' => 0]);
+        $labelFr1 = $translator->trans('num_of_apples', ['apples' => 1]);
+        $labelFr15 = $translator->trans('num_of_apples', ['apples' => 15]);
+
+        $labelEn0 = $translator->trans('num_of_apples', ['apples' => 0], 'messages', 'en');
+        $labelEn1 = $translator->trans('num_of_apples', ['apples' => 1], 'messages', 'en');
+        $labelEn15 = $translator->trans('num_of_apples', ['apples' => 15], 'messages', 'en');
+        return new Response("<body>Traduction : $labelFr0 / $labelFr1 / $labelFr15 / $labelEn0 / $labelEn1 / $labelEn15</body>");
+    }
 }
