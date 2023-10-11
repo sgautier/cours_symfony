@@ -46,4 +46,24 @@ class TranslationTestController extends AbstractController
         $locale = $request->getLocale();
         return new Response("<body>Locale courante : $locale</body>");
     }
+
+    #[Route('/force-locale', name: 'force_locale')]
+    public function forceLocale(TranslatorInterface $translator): Response
+    {
+        $labelFr = $translator->trans(
+            'header.welcome', // message à traduire
+            [], // paramètres pour la traduction => vu plus loin dans le cours
+            'messages', // domaine de traduction => vu plus loin dans le cours
+            'fr_FR' // locale souhaitée pour la traduction. Symfony fera un fallback de fr_FR vers fr car je n'ai pas de fichier messages.fr_FR.yml
+        );
+        $labelEn = $translator->trans('header.welcome', [], 'messages', 'en');
+
+        return new Response("<body>Traductions : $labelFr / $labelEn</body>");
+    }
+
+    #[Route('/force-locale-in-twig', name: 'force_locale_in_twig')]
+    public function forceLocaleInTwig(): Response
+    {
+        return $this->render('translation/force_locale.html.twig');
+    }
 }

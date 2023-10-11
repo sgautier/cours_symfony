@@ -1,0 +1,8 @@
+<body>
+
+{{ 'header.welcome'|trans({}, 'messages', 'fr_FR') }}<br>
+{% trans from 'messages' into 'fr_FR' %}header.welcome{% endtrans %}<br>
+{{ 'header.welcome'|trans({}, 'messages', 'en') }}<br>
+{% trans from 'messages' into 'en' %}header.welcome{% endtrans %}<br>
+
+</body>
