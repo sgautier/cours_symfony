@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -13,7 +14,7 @@ class MyOtherAccountController extends AbstractController
     // Toutes les actions requièrent le rôle ROLE_USER
 
     #[Route('/', name: 'security_example_home')]
-    public function homeAction()
+    public function homeAction(): Response
     {
         return new Response("<body>Il faut que l'utilisateur soit ROLE_USER au minimum</body>");
     }

@@ -28,7 +28,7 @@ class DefaultController extends AbstractController
     {
         // La page DOIT être un entier strictement positif (les requirements s'assurent uniquement du fait que la
         // variable est composée de chiffres)
-        if($page < 1) {
+        if ($page < 1) {
             throw new NotFoundHttpException("La page $page n'existe pas");
         }
 

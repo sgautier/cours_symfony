@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Controller;
 
 use Symfony\Component\Security\Http\Attribute\IsGranted;
@@ -29,7 +30,7 @@ class ThisIsMyAccountController extends AbstractController
     {
         if ($this->isGranted('ROLE_ADMIN')) {
             dump("Bienvenue Monsieur l'administrateur");
-        } elseif($security->isGranted("ROLE_USER")) {
+        } elseif ($security->isGranted("ROLE_USER")) {
             dump("Salut utilisateur");
         } else {
             dump("Qui êtes vous ?");

@@ -3,7 +3,10 @@
 namespace App\Controller;
 
 use App\Entity\Vehicle;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\ORM\NonUniqueResultException;
+use Doctrine\ORM\NoResultException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,7 +19,7 @@ class VehicleController extends AbstractController
     {
         $vehicle = new Vehicle();
         $vehicle->setPlate('AB-123-CD')->setMileage(58000)->setPrice(19999.99)
-            ->setManufactureDate(new \DateTime('2017-11-24'))->setDescription('Très belle voiture');
+            ->setManufactureDate(new DateTime('2017-11-24'))->setDescription('Très belle voiture');
 
         // Dire à Doctrine qu'a priori l'objet devra être sauvegardé en base de données (pas de requête pour le moment)
         $entityManager->persist($vehicle);
@@ -32,12 +35,16 @@ class VehicleController extends AbstractController
     {
         $vehicle = new Vehicle();
         $vehicle->setPlate('AB-123-CD')->setMileage(58000)->setPrice(19999.99)
-            ->setManufactureDate(new \DateTime('2017-11-24'))->setDescription('Très belle voiture');
+            ->setManufactureDate(new DateTime('2017-11-24'))->setDescription('Très belle voiture');
         $vehicle2 = clone($vehicle);
         $entityManager->persist($vehicle);
 
-        if($entityManager->contains($vehicle)) { /* true */ dump('$vehicle1 est connu'); }
-        if($entityManager->contains($vehicle2)) { /* false */ dump('$vehicle2 est connu'); }
+        if ($entityManager->contains($vehicle)) { /* true */
+            dump('$vehicle1 est connu');
+        }
+        if ($entityManager->contains($vehicle2)) { /* false */
+            dump('$vehicle2 est connu');
+        }
         $entityManager->clear('App\Entity\Vehicle'); // Toutes les entités Vehicle ne seront plus persistées
         $entityManager->clear(); // Plus aucune entité ne sera persistée (tout type confondu)
 
@@ -61,7 +68,7 @@ class VehicleController extends AbstractController
         // find() attend l'ID permettant de charger l'entité
         $vehicle = $em->getRepository(Vehicle::class)->find($id);
 
-        if(!$vehicle) {
+        if (!$vehicle) {
             throw $this->createNotFoundException("Véhicule non trouvé");
         }
 
@@ -153,6 +160,10 @@ class VehicleController extends AbstractController
         return new Response('<body></body>');
     }
 
+    /**
+     * @throws NonUniqueResultException
+     * @throws NoResultException
+     */
     #[Route('/test-query-results', name: 'vehicle_test_query_results')]
     public function testQueryResults(EntityManagerInterface $em): Response
     {

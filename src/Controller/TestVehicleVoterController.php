@@ -29,9 +29,12 @@ class TestVehicleVoterController extends AbstractController
     public function viewEmptyAction(Security $security, EntityManagerInterface $em): Response
     {
         $vehicle = $em->getRepository(Vehicle::class)->findOneByPlate('GC-546-AA');
+        if (!$vehicle) {
+            throw new NotFoundHttpException('Véhicule inconnu');
+        }
         $vehicle->setPlate(''); // Pour le test, on vide l'immatriculation
 
-        if (!$vehicle || !$security->isGranted('view', $vehicle)) {
+        if (!$security->isGranted('view', $vehicle)) {
             throw new NotFoundHttpException('Véhicule inconnu');
         }
 

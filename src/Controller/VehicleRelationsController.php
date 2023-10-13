@@ -8,6 +8,7 @@ use App\Entity\VehicleModel;
 use App\Entity\VehicleRepair;
 use App\Entity\VehicleSecurity;
 use App\Entity\VehicleToVehicleRepair;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -21,7 +22,7 @@ class VehicleRelationsController extends AbstractController
     {
         $v = new Vehicle();
         $v->setPlate('EB-423-MA')->setMileage(12500)->setPrice(23000)
-            ->setManufactureDate(new \DateTime('2021-01-02'))->setDescription('Comme neuve');
+            ->setManufactureDate(new DateTime('2021-01-02'))->setDescription('Comme neuve');
 
         $vs = new VehicleSecurity();
         $vs->setAbs(true)->setEsp(false)->setAirbagNumber(4)->setEuroNcapStars(4);
@@ -56,12 +57,12 @@ class VehicleRelationsController extends AbstractController
         $v->setVehicleModel($m)->setPlate('GA-928-GZ')
             ->setDescription('Comme neuve')->setMileage(1500)
             ->setPrice(29000)
-            ->setManufactureDate(new \DateTime('2021-06-02'));
+            ->setManufactureDate(new DateTime('2021-06-02'));
         $v2 = new Vehicle();
         $v2->setVehicleModel($m)->setPlate('DK-721-MA')
             ->setDescription('Bonne occasion')->setMileage(89500)
             ->setPrice(15900)
-            ->setManufactureDate(new \DateTime('2017-12-21'));
+            ->setManufactureDate(new DateTime('2017-12-21'));
 
         // Il faut persister les 3 entités car aucune
         // cascade n'a été définie
@@ -82,7 +83,7 @@ class VehicleRelationsController extends AbstractController
         $v->setVehicleModel($m)->setPlate('FV-619-NZ')
             ->setDescription('')->setMileage(46000)
             ->setPrice(16900)
-            ->setManufactureDate(new \DateTime('2020-01-30'));
+            ->setManufactureDate(new DateTime('2020-01-30'));
 
         $em->persist($v);
         $em->flush();
@@ -109,7 +110,7 @@ class VehicleRelationsController extends AbstractController
             ->setPrice(6700)
             ->setPlate('AZ-529-BJ')
             ->setMileage(159000)
-            ->setManufactureDate(new \DateTime('2010-05-12'))
+            ->setManufactureDate(new DateTime('2010-05-12'))
             ->setDescription('');
         foreach ($equipments as $equipment) {
             $vehicle->addEquipment($equipment);
@@ -126,7 +127,7 @@ class VehicleRelationsController extends AbstractController
             ->findOneByPlate('AZ-529-BJ');
         foreach ($vehicle->getEquipments() as $key => $equipment) {
             // Ne supprimer qu'un équipement sur 2, c'est juste pour l'exercice :)
-            if($key % 2 == 0) {
+            if ($key % 2 == 0) {
                 continue;
             }
             $vehicle->removeEquipment($equipment);
@@ -151,13 +152,13 @@ class VehicleRelationsController extends AbstractController
 
         // Ajout des associations
         $link = new VehicleToVehicleRepair();
-        $link->setDate(new \DateTime('2018-01-03'))->setVehicle($vehicle)->setVehicleRepair($repairs);
+        $link->setDate(new DateTime('2018-01-03'))->setVehicle($vehicle)->setVehicleRepair($repairs);
         $em->persist($link);
         $link2 = new VehicleToVehicleRepair(); // La même réparation à une autre date !
-        $link2->setDate(new \DateTime('2020-01-12'))->setVehicle($vehicle)->setVehicleRepair($repairs);
+        $link2->setDate(new DateTime('2020-01-12'))->setVehicle($vehicle)->setVehicleRepair($repairs);
         $em->persist($link2);
         $link3 = new VehicleToVehicleRepair();
-        $link3->setDate(new \DateTime('2018-01-04'))->setVehicle($vehicle)->setVehicleRepair($repairs2);
+        $link3->setDate(new DateTime('2018-01-04'))->setVehicle($vehicle)->setVehicleRepair($repairs2);
         $em->persist($link3);
 
         $em->flush();

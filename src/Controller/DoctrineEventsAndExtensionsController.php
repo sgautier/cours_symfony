@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\Vehicle;
 use App\Entity\VehicleModel;
+use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -16,7 +17,7 @@ class DoctrineEventsAndExtensionsController extends AbstractController
     public function testDoctrineEventAction(EntityManagerInterface $em): Response
     {
         $vehicle = new Vehicle();
-        $vehicle->setPlate('GA-192-FB')->setMileage(17500)->setPrice(14500)->setManufactureDate(new \DateTime('2021-06-25'));
+        $vehicle->setPlate('GA-192-FB')->setMileage(17500)->setPrice(14500)->setManufactureDate(new DateTime('2021-06-25'));
         $em->persist($vehicle);
         $em->flush();
         return new Response('<body></body>');
@@ -26,10 +27,10 @@ class DoctrineEventsAndExtensionsController extends AbstractController
     public function testDoctrineServiceEvent(EntityManagerInterface $em): Response
     {
         $vehicle1 = new Vehicle(); // Un véhicule sans modèle
-        $vehicle1->setPlate('AA-123-BB')->setMileage(17500)->setPrice(14500)->setManufactureDate(new \DateTime('2015-06-25'));
+        $vehicle1->setPlate('AA-123-BB')->setMileage(17500)->setPrice(14500)->setManufactureDate(new DateTime('2015-06-25'));
 
         $vehicle2 = new Vehicle(); // Un véhicule avec modèle
-        $vehicle2->setPlate('BB-321-AA')->setMileage(17500)->setPrice(14500)->setManufactureDate(new \DateTime('2015-06-25'));
+        $vehicle2->setPlate('BB-321-AA')->setMileage(17500)->setPrice(14500)->setManufactureDate(new DateTime('2015-06-25'));
         $model = new VehicleModel();
         $model->setName('Clio')->setMake('Renault');
         $vehicle2->setVehicleModel($model);

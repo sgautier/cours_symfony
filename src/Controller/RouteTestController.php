@@ -28,7 +28,7 @@ class RouteTestController extends AbstractController
     }
 
     #[Route('/route/with-variable-and-default-value-bis/{page}', name: 'nom-de-ma-route-4')]
-    public function withDefaultValuesBisAction($page=1): Response
+    public function withDefaultValuesBisAction($page = 1): Response
     {
         return new Response("<body>$page</body>");
     }
