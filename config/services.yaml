@@ -77,10 +77,6 @@ services:
         tags:
             - { name: doctrine.event_listener, event: postPersist }
 
-    App\Service\VehicleCreatedWithoutModelDetectorAndWarnerSubscriber:
-        tags:
-            - { name: doctrine.event_subscriber }
-
     App\Service\VehicleSaveUser:
         tags:
             - { name: doctrine.event_subscriber }

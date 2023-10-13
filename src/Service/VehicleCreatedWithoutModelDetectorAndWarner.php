@@ -6,7 +6,7 @@ namespace App\Service;
 
 use App\Entity\Vehicle;
 use App\Entity\VehicleModel;
-use Doctrine\ORM\Event\LifecycleEventArgs;
+use Doctrine\ORM\Event\PostPersistEventArgs;
 
 class VehicleCreatedWithoutModelDetectorAndWarner
 {
@@ -17,7 +17,7 @@ class VehicleCreatedWithoutModelDetectorAndWarner
         $this->vehicleWithoutModelMailer = $vehicleWithoutModelMailer;
     }
 
-    public function postPersist(LifecycleEventArgs $args): void
+    public function postPersist(PostPersistEventArgs $args): void
     {
         // La méthode doit porter le nom de l'évènement déclaré dans services.yaml
         // Noter que le paramètre LifecycleEventArgs permet également d'accéder à l'EntityManager
