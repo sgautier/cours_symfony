@@ -27,12 +27,12 @@ readonly class VehicleCreatedWithoutModelDetectorAndWarner
 
         $entity = $args->getObject();
 
-        if(!$entity instanceof Vehicle) {
+        if (!$entity instanceof Vehicle) {
             // Ne rien faire s'il ne s'agit pas d'une entité Vehicle => ne pas oublier ce test !
             return;
         }
 
-        if($entity->getVehicleModel() instanceof VehicleModel) {
+        if ($entity->getVehicleModel() instanceof VehicleModel) {
             // Ne rien faire dans ce cas car le modèle est bien renseigné
             return;
         }

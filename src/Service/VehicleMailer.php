@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Service;
 
 use App\Entity\Vehicle;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -16,6 +17,9 @@ readonly class VehicleMailer
     {
     }
 
+    /**
+     * @throws TransportExceptionInterface
+     */
     public function vehicleWithoutModelSendEmail(Vehicle $vehicle): void
     {
         $email = (new Email())

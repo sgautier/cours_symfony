@@ -21,7 +21,7 @@ class MyLoginFormAuthenticator extends AbstractLoginFormAuthenticator
 
     public const LOGIN_ROUTE = 'app_login';
 
-    public function __construct(private UrlGeneratorInterface $urlGenerator)
+    public function __construct(readonly private UrlGeneratorInterface $urlGenerator)
     {
     }
 
@@ -46,7 +46,7 @@ class MyLoginFormAuthenticator extends AbstractLoginFormAuthenticator
             return new RedirectResponse($targetPath);
         }
 
-         return new RedirectResponse($this->urlGenerator->generate('profile_home'));
+        return new RedirectResponse($this->urlGenerator->generate('profile_home'));
     }
 
     protected function getLoginUrl(Request $request): string
