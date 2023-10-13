@@ -8,16 +8,15 @@ use App\Entity\Vehicle;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
-class VehicleWithoutModelMailer
+readonly class VehicleMailer
 {
-    private MailerInterface $mailer;
-
-    public function __construct(MailerInterface $mailer)
+    public function __construct(
+        private MailerInterface $mailer
+    )
     {
-        $this->mailer = $mailer;
     }
 
-    public function sendEmail(Vehicle $vehicle): void
+    public function vehicleWithoutModelSendEmail(Vehicle $vehicle): void
     {
         $email = (new Email())
             ->subject("Vehicule {$vehicle->getPlate()} sans modèle")
@@ -27,4 +26,10 @@ class VehicleWithoutModelMailer
 
         $this->mailer->send($email);
     }
+
+    public function vehicleNeedsRepairsSendEmail(Vehicle $vehicle): void
+    {
+        // ...
+    }
+    // Autres méthodes pour des envois d'emails liés à un Vehicle
 }

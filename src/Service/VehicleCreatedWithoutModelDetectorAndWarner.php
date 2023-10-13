@@ -6,15 +6,18 @@ namespace App\Service;
 
 use App\Entity\Vehicle;
 use App\Entity\VehicleModel;
+use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
 use Doctrine\ORM\Event\PostPersistEventArgs;
+use Doctrine\ORM\Events;
 
-class VehicleCreatedWithoutModelDetectorAndWarner
+// Définir l'évènement qu'on souhaite écouter. La priorité permet d'agencer plusieurs services entre eux
+#[AsDoctrineListener(event: Events::postPersist, priority: 0)]
+readonly class VehicleCreatedWithoutModelDetectorAndWarner
 {
-    private VehicleWithoutModelMailer $vehicleWithoutModelMailer;
-
-    public function __construct(VehicleWithoutModelMailer $vehicleWithoutModelMailer)
+    public function __construct(
+        private VehicleMailer $vehicleWithoutModelMailer,
+    )
     {
-        $this->vehicleWithoutModelMailer = $vehicleWithoutModelMailer;
     }
 
     public function postPersist(PostPersistEventArgs $args): void
@@ -35,6 +38,6 @@ class VehicleCreatedWithoutModelDetectorAndWarner
         }
 
         // Faire appel au service Mailer qui enverra l'alerte
-        $this->vehicleWithoutModelMailer->sendEmail($entity);
+        $this->vehicleWithoutModelMailer->vehicleWithoutModelSendEmail($entity);
     }
 }

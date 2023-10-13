@@ -71,12 +71,6 @@ services:
             - ['mySecondMethod', [123, 'toto']]
             - ['myOtherMethod', ['@App\Service\LoggerDumper']]
 
-    App\Service\VehicleCreatedWithoutModelDetectorAndWarner:
-        # Utiliser le tag doctrine.event_listener ainsi que l'event
-        # Doctrine concerné (postPersist ici)
-        tags:
-            - { name: doctrine.event_listener, event: postPersist }
-
     App\Service\VehicleSaveUser:
         tags:
             - { name: doctrine.event_subscriber }
