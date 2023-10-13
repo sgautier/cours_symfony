@@ -1,7 +1,8 @@
 <?php
+
 namespace App\MySampleClass;
 
 class MyClass1
 {
-    public $name = 'This is MyClass1 value';
+    public string $name = 'This is MyClass1 value';
 }

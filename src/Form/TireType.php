@@ -17,8 +17,7 @@ class TireType extends AbstractType
             ->add('brandName', TextType::class)
             ->add('price', MoneyType::class, [
                 'currency' => 'EUR',
-            ])
-        ;
+            ]);
     }
 
     public function configureOptions(OptionsResolver $resolver): void
