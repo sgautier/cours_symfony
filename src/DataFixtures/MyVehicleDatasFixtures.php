@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\DataFixtures;
 
 use App\Entity\Vehicle;
@@ -35,12 +37,12 @@ class MyVehicleDatasFixtures extends Fixture
         $manager->persist($vehicleEquipment3);
 
         $vehicleSecurity = new VehicleSecurity();
-        $vehicleSecurity->setAirbagNumber(4)->setEuroNcapStars(4)->setEsp(1)->setAbs(0);
+        $vehicleSecurity->setAirbagNumber(4)->setEuroNcapStars(4)->setEsp(true)->setAbs(false);
         $manager->persist($vehicleSecurity);
 
         $vehicle = new Vehicle();
         $vehicle->setVehicleModel($model)->setMileage(55089)->setManufactureDate(new DateTime('2016-05-06'))
-            ->setPlate('BA-011-NJ')->setPrice('10500')->setDescription('Bon véhicule !')
+            ->setPlate('BA-011-NJ')->setPrice(10500)->setDescription('Bon véhicule !')
             ->setVehicleSecurity($vehicleSecurity)->addEquipment($vehicleEquipment)->addEquipment($vehicleEquipment3);
         $manager->persist($vehicle);
 
