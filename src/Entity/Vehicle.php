@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\VehicleRepository;
+use DateTimeInterface;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -34,7 +35,7 @@ class Vehicle
     private ?string $description = null;
 
     #[ORM\Column(name: 'manu_date', type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $manufactureDate = null;
+    private ?DateTimeInterface $manufactureDate = null;
 
     #[ORM\OneToOne(inversedBy: 'vehicle', cascade: ['persist', 'remove'])]
     private ?VehicleSecurity $vehicleSecurity = null;
@@ -61,16 +62,16 @@ class Vehicle
     }
 
     #[ORM\PrePersist]
-    public function forceDescription()
+    public function forceDescription(): void
     {
-        if(is_null($this->description)) {
+        if (is_null($this->description)) {
             // Uniquement si la description n'est pas renseignée, en définir une
             $this->description = "Le véhicule {$this->plate} a {$this->mileage} km";
         }
     }
 
     #[ORM\PostLoad]
-    public function testPostLoad()
+    public function testPostLoad(): void
     {
         dump('Je passe dans le testPostLoad');
     }
@@ -128,12 +129,12 @@ class Vehicle
         return $this;
     }
 
-    public function getManufactureDate(): ?\DateTimeInterface
+    public function getManufactureDate(): ?DateTimeInterface
     {
         return $this->manufactureDate;
     }
 
-    public function setManufactureDate(\DateTimeInterface $manufactureDate): self
+    public function setManufactureDate(DateTimeInterface $manufactureDate): self
     {
         $this->manufactureDate = $manufactureDate;
 

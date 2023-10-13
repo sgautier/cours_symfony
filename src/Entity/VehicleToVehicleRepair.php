@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\VehicleToVehicleRepairRepository;
+use DateTimeInterface;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -15,7 +16,7 @@ class VehicleToVehicleRepair
     private ?int $id = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    private ?\DateTimeInterface $date = null;
+    private ?DateTimeInterface $date = null;
 
     #[ORM\ManyToOne(inversedBy: 'vehicleToVehicleRepairs')]
     #[ORM\JoinColumn(nullable: false)]
@@ -30,12 +31,12 @@ class VehicleToVehicleRepair
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeInterface
+    public function getDate(): ?DateTimeInterface
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeInterface $date): self
+    public function setDate(DateTimeInterface $date): self
     {
         $this->date = $date;
 

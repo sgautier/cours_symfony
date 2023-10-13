@@ -29,7 +29,7 @@ class Tire
     private ?float $price = null;
 
     #[Assert\IsTrue(message: "Le prix n'est pas valide")]
-    public function isPriceValid()
+    public function isPriceValid(): bool
     {
         return is_float($this->price) && $this->price > 0;
     }

@@ -6,6 +6,7 @@ use App\Entity\Vehicle;
 use App\Entity\VehicleEquipment;
 use App\Entity\VehicleModel;
 use App\Entity\VehicleSecurity;
+use DateTime;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 
@@ -38,7 +39,7 @@ class MyVehicleDatasFixtures extends Fixture
         $manager->persist($vehicleSecurity);
 
         $vehicle = new Vehicle();
-        $vehicle->setVehicleModel($model)->setMileage(55089)->setManufactureDate(new \DateTime('2016-05-06'))
+        $vehicle->setVehicleModel($model)->setMileage(55089)->setManufactureDate(new DateTime('2016-05-06'))
             ->setPlate('BA-011-NJ')->setPrice('10500')->setDescription('Bon véhicule !')
             ->setVehicleSecurity($vehicleSecurity)->addEquipment($vehicleEquipment)->addEquipment($vehicleEquipment3);
         $manager->persist($vehicle);

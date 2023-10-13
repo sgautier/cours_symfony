@@ -34,15 +34,14 @@ class VehicleEquipment
     }
 
     #[Assert\Callback]
-    public function isDescriptionValid(ExecutionContextInterface $context)
+    public function isDescriptionValid(ExecutionContextInterface $context): void
     {
-        if($this->name == $this->description) {
+        if ($this->name == $this->description) {
             // La règle est violée => définition de l'erreur
             $context
                 ->buildViolation("Il est interdit d'utiliser la même valeur pour le nom et la description") // Message
                 ->atPath('description') // Préciser l'attribut de l'objet qui est violé
-                ->addViolation()
-            ;
+                ->addViolation();
         }
     }
 
