@@ -29,7 +29,7 @@ class DefaultController extends AbstractController
     public function conditionsForAction($nbProducts): Response
     {
         $products = [];
-        for ($i=1 ; $i<=$nbProducts ; $i++) {
+        for ($i = 1; $i <= $nbProducts; $i++) {
             $products[] = [
                 'name' => "Produit $i",
                 'description' => "Description $i",
