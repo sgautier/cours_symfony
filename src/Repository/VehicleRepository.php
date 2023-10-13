@@ -3,11 +3,13 @@
 namespace App\Repository;
 
 use App\Entity\Vehicle;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\ORM\NonUniqueResultException;
 use Doctrine\ORM\QueryBuilder;
 use Doctrine\ORM\Tools\Pagination\Paginator;
 use Doctrine\Persistence\ManagerRegistry;
+use Exception;
 
 /**
  * @extends ServiceEntityRepository<Vehicle>
@@ -71,11 +73,13 @@ class VehicleRepository extends ServiceEntityRepository
             // Ajout d'une contrainte sur la propriété id de l'entité v
             ->where('v.id = :my_id')
             // Attribution de la valeur au paramètre (id reçu en paramètre)
-            ->setParameter('my_id', $id)
-        ;
+            ->setParameter('my_id', $id);
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @throws Exception
+     */
     public function findByMileageAndYear($mileageMin, $mileageMax, $year): mixed
     {
         $qb = $this->createQueryBuilder('v')
@@ -84,12 +88,14 @@ class VehicleRepository extends ServiceEntityRepository
             ->andWhere('v.mileage <= :mileage_max')
             ->setParameter('mileage_max', $mileageMax)
             ->andWhere('v.manufactureDate BETWEEN :begin AND :end')
-            ->setParameter('begin', new \DateTime($year . '-01-01'))
-            ->setParameter('end', new \DateTime($year . '-12-31'))
-        ;
+            ->setParameter('begin', new DateTime($year . '-01-01'))
+            ->setParameter('end', new DateTime($year . '-12-31'));
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @throws Exception
+     */
     public function findByMileageAndYearBis($mileageMin, $mileageMax, $year): mixed
     {
         $qb = $this->createQueryBuilder('v')
@@ -101,6 +107,9 @@ class VehicleRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @throws Exception
+     */
     public function findByPriceAndYear($priceMin, $priceMax, $year): mixed
     {
         $qb = $this->createQueryBuilder('v')
@@ -112,12 +121,15 @@ class VehicleRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+    /**
+     * @throws Exception
+     */
     public function whereYear(QueryBuilder $qb, $year): void
     {
         $qb
             ->andWhere('v.manufactureDate BETWEEN :begin AND :end')
-            ->setParameter('begin', new \DateTime($year . '-01-01'))
-            ->setParameter('end', new \DateTime($year . '-12-31'));
+            ->setParameter('begin', new DateTime($year . '-01-01'))
+            ->setParameter('end', new DateTime($year . '-12-31'));
     }
 
     public function myFindAllDql(): mixed
