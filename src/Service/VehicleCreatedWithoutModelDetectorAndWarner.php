@@ -15,15 +15,15 @@ use Doctrine\ORM\Events;
 readonly class VehicleCreatedWithoutModelDetectorAndWarner
 {
     public function __construct(
-        private VehicleMailer $vehicleWithoutModelMailer,
+        private VehicleMailer $vehicleMailer,
     )
     {
     }
 
     public function postPersist(PostPersistEventArgs $args): void
     {
-        // La méthode doit porter le nom de l'évènement déclaré dans services.yaml
-        // Noter que le paramètre LifecycleEventArgs permet également d'accéder à l'EntityManager
+        // La méthode doit porter le nom de l'évènement déclaré dans l’annotation de la classe
+        // Noter que le paramètre PostPersistEventArgs permet également d'accéder à l'EntityManager (via sa classe parente LifecycleEventArgs)
 
         $entity = $args->getObject();
 
@@ -38,6 +38,6 @@ readonly class VehicleCreatedWithoutModelDetectorAndWarner
         }
 
         // Faire appel au service Mailer qui enverra l'alerte
-        $this->vehicleWithoutModelMailer->vehicleWithoutModelSendEmail($entity);
+        $this->vehicleMailer->vehicleWithoutModelSendEmail($entity);
     }
 }
