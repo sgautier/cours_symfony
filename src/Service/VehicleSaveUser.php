@@ -6,23 +6,17 @@ namespace App\Service;
 
 use App\Entity\Vehicle;
 use Doctrine\Bundle\DoctrineBundle\Attribute\AsDoctrineListener;
-use Doctrine\Common\EventSubscriber;
 use Doctrine\ORM\Event\PrePersistEventArgs;
 use Doctrine\ORM\Events;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 #[AsDoctrineListener(event: Events::prePersist, priority: 0)]
-readonly class VehicleSaveUser implements EventSubscriber
+readonly class VehicleSaveUser
 {
     public function __construct(
         private TokenStorageInterface $token,
     )
     {
-    }
-
-    public function getSubscribedEvents(): array
-    {
-        return ['prePersist',];
     }
 
     public function prePersist(PrePersistEventArgs $args): void
