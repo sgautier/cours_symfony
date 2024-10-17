@@ -16,9 +16,12 @@ security:
         main:
             lazy: true
             provider: app_user_provider
-            custom_authenticator: App\Security\MyLoginFormAuthenticator
             # Permet d'autoriser le switch d'utilisateurs pour ce firewall
             switch_user: true
+            form_login:
+                login_path: app_login
+                check_path: app_login
+                enable_csrf: true
             logout:
                 path: app_logout
                 # where to redirect after logout

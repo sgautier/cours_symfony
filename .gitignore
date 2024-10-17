@@ -14,3 +14,5 @@
 
 # Ignore IDE settings
 .idea
+
+.php-version

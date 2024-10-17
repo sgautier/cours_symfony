@@ -224,7 +224,7 @@ class VehicleRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneByPlateWithVehicleToVehicleRepair(string $plate)
+    public function findOneByPlateWithVehicleToVehicleRepair(string $plate): ?Vehicle
     {
         return $this->createQueryBuilder('v')
             ->where('v.plate=:plate')->setParameter('plate', $plate)
@@ -236,7 +236,7 @@ class VehicleRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneByPlateWithVehicleToVehicleRepairAndVehicleRepair(string $plate)
+    public function findOneByPlateWithVehicleToVehicleRepairAndVehicleRepair(string $plate): ?Vehicle
     {
         return $this->createQueryBuilder('v')
             ->where('v.plate=:plate')->setParameter('plate', $plate)

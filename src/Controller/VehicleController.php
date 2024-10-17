@@ -38,7 +38,7 @@ class VehicleController extends AbstractController
         $vehicle = new Vehicle();
         $vehicle->setPlate('AB-123-CD')->setMileage(58000)->setPrice(19999.99)
             ->setManufactureDate(new DateTime('2017-11-24'))->setDescription('Très belle voiture');
-        $vehicle2 = clone($vehicle);
+        $vehicle2 = clone $vehicle;
         $entityManager->persist($vehicle);
 
         if ($entityManager->contains($vehicle)) { /* true */
@@ -221,6 +221,9 @@ class VehicleController extends AbstractController
         // Nombre total de pages construit à partir du nombre total de résultats
         $nbTotalPages = intval(ceil(count($vehicles) / $nbPerPage));
         dump($nbTotalPages);
+
+        // Nombre d'objets chargés dans la page courante (toujours égal au nombre par page sauf sur la dernière page)
+        dump(count($vehicles->getIterator()));
 
         // Il est possible d'itérer sur l'objet Paginator comme s'il s'agissait d'un résultat classique
         foreach ($vehicles as $vehicle) {

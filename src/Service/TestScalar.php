@@ -19,7 +19,7 @@ class TestScalar
         $this->array = $array;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return "Values : {$this->myString} - {$this->myInt} - {$this->myConstant} - "
             . implode(', ', $this->array);
