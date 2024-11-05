@@ -64,7 +64,7 @@ class VehicleController extends AbstractController
     }
 
     #[Route('/show/{id}', name: 'vehicle_show')]
-    public function showAction($id, EntityManagerInterface $em): Response
+    public function showAction(int $id, EntityManagerInterface $em): Response
     {
         // Préciser l'entité souhaitée. Remarque : la classe Repository n'a pas besoin d'exister
         // find() attend l'ID permettant de charger l'entité
@@ -210,7 +210,7 @@ class VehicleController extends AbstractController
         name: 'vehicle_my_find_all_with_paging',
         requirements: ['currentPage' => '\d+', 'nbPerPage' => '\d+']
     )]
-    public function testMyFindAllWithPagingAction(EntityManagerInterface $em, $currentPage, $nbPerPage): Response
+    public function testMyFindAllWithPagingAction(EntityManagerInterface $em, int $currentPage, int $nbPerPage): Response
     {
         $vehicles = $em->getRepository(Vehicle::class)
             ->myFindAllWithPaging($currentPage, $nbPerPage);
@@ -231,5 +231,4 @@ class VehicleController extends AbstractController
         }
         return new Response('<body></body>');
     }
-
 }

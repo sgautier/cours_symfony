@@ -24,13 +24,13 @@ class RouteTestController extends AbstractController
     }
 
     #[Route('/route/with-variable-and-default-value/{page}', name: 'nom-de-ma-route-3', defaults: ['page' => 1])]
-    public function withDefaultValuesAction($page): Response
+    public function withDefaultValuesAction(int $page): Response
     {
         return new Response("<body>$page</body>");
     }
 
     #[Route('/route/with-variable-and-default-value-bis/{page}', name: 'nom-de-ma-route-4')]
-    public function withDefaultValuesBisAction($page = 1): Response
+    public function withDefaultValuesBisAction(int $page = 1): Response
     {
         return new Response("<body>$page</body>");
     }
@@ -41,7 +41,7 @@ class RouteTestController extends AbstractController
         requirements: ['page' => '\d+'],
         defaults: ['page' => 1]
     )]
-    public function withConstraintAction($page): Response
+    public function withConstraintAction(int $page): Response
     {
         return new Response("<body>$page</body>");
     }
@@ -56,7 +56,7 @@ class RouteTestController extends AbstractController
         ],
         defaults: ['extension' => 'html'],
     )]
-    public function withMultipleConstraintsAction($year, $month, $filename, $extension): Response
+    public function withMultipleConstraintsAction(int $year, int $month, string $filename, string $extension): Response
     {
         return new Response("<body>$year, $month, $filename, $extension</body>");
     }
@@ -68,7 +68,7 @@ class RouteTestController extends AbstractController
         defaults: ['page' => '1'],
         methods: ['GET'],
     )]
-    public function withHttpMethodConstraintAction($page): Response
+    public function withHttpMethodConstraintAction(int $page): Response
     {
         return new Response("<body>$page</body>");
     }

@@ -26,7 +26,7 @@ class DefaultController extends AbstractController
     }
 
     #[Route('/display-results/{page}', name: 'display_results', requirements: ['page' => '\d+'], defaults: ['page' => 1])]
-    public function displayResultsAction($page): Response
+    public function displayResultsAction(int $page): Response
     {
         // La page DOIT être un entier strictement positif (les requirements s'assurent uniquement du fait que la
         // variable est composée de chiffres)
