@@ -42,8 +42,8 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         - { path: ^/admin/non-protected, roles: PUBLIC_ACCESS } # Autoriser /admin/non-protected* pour tout le monde (attention à l'ordre !)
-        - { path: ^/admin, roles: ROLE_ADMIN } # Il faut être ROLE_ADMIN pour accéder à /admin/*
-        - { path: ^/profile, roles: ROLE_USER } # Il faut être ROLE_USER pour accéder à /profile/*
+        - { path: ^/admin/, roles: ROLE_ADMIN } # Il faut être ROLE_ADMIN pour accéder à /admin/*
+        - { path: ^/profile/, roles: ROLE_USER } # Il faut être ROLE_USER pour accéder à /profile/*
 
 when@test:
     security:
