@@ -96,7 +96,7 @@ class VehicleRelationsController extends AbstractController
     public function testLoadRelationManyToOneAction(EntityManagerInterface $em): Response
     {
         $m = $em->getRepository(VehicleModel::class)->findOneByName('3008');
-        // Remarque : findOneByName() et findByVehicleModel() n'existent pas ==> rappel : méthode magique
+        // Remarque : findOneByName() et findByVehicleModel() n'existent pas ==> rappel : méthodes magiques
         $vehicles = $em->getRepository(Vehicle::class)->findByVehicleModel($m);
         dump($vehicles);
         return new Response('<body></body>');
