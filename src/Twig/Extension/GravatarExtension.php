@@ -11,7 +11,7 @@ class GravatarExtension extends AbstractExtension
 {
     public function getFunctions(): array
     {
-        // Il est possible de définir plusieurs fonction Twig
+        // Il est possible de définir plusieurs fonctions Twig
         return [
             new TwigFunction('gravatar', [$this, 'getGravatarUri']),
         ];
