@@ -32,7 +32,7 @@ class VehicleRepository extends ServiceEntityRepository
     {
         // Solution 1 :
         $queryBuilder = $this->_em->createQueryBuilder() // Créer un query builder vide
-            ->select('v') // Préciser quelles colonnes sélectionner (toute ici)
+            ->select('v') // Préciser quelles colonnes sélectionner (toutes ici)
             ->from($this->_entityName, 'v'); // Préciser sur quelle entité
 
         dump($queryBuilder);
