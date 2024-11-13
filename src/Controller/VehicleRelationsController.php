@@ -99,6 +99,7 @@ class VehicleRelationsController extends AbstractController
         // Remarque : findOneByName() et findByVehicleModel() n'existent pas ==> rappel : méthodes magiques
         $vehicles = $em->getRepository(Vehicle::class)->findByVehicleModel($m);
         dump($vehicles);
+        // Remarque : comme la relation est bidirectionnelle, il est également possible de faire $m->getVehicles()
         return new Response('<body></body>');
     }
 
