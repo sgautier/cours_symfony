@@ -175,6 +175,7 @@ class VehicleRelationsController extends AbstractController
 
         // Chargement de tous les VehicleToVehicleRepair associés à ce véhicule
         $links = $em->getRepository(VehicleToVehicleRepair::class)->findBy(['vehicle' => $vehicle]);
+        // OU, puisque la relation est bidirectionnelle : $links = $vehicle->getVehicleToVehicleRepairs();
 
         return $this->render('vehicle/list_repairs.html.twig', ['vehicle' => $vehicle, 'links' => $links]);
     }
