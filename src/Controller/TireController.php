@@ -49,8 +49,8 @@ class TireController extends AbstractController
         $tire->setBrandName('Michelin')->setPrice(79);
 
         $form = $this->createForm(TireType::class, $tire);
-        // Eventuellement, ajout de champs supplémentaires (classiquement les boutons de validation pour ne pas polluer le formulaire)
-        // Il est également possible de supprimer des champs si on le souhaite (en fonction d'un besoin métier particulier
+        // Éventuellement, ajout de champs supplémentaires (classiquement les boutons de validation pour ne pas polluer le formulaire)
+        // Il est également possible de supprimer des champs si on le souhaite (en fonction d'un besoin métier particulier)
         $form->add('send', SubmitType::class, ['label' => 'Add a new tire']);
 
         // Aucun changement
