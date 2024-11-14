@@ -29,7 +29,7 @@ class VehicleRelationsJoinController extends AbstractController
         $vehicle = $em->getRepository(Vehicle::class)->findOneByPlateWithSecurity('EB-423-MA');
         // Cette fois-ci, Doctrine n'a pas besoin d'exécuter une seconde requête car
         // il "connaît" les données de VehicleSecurity
-        dump($vehicle->getVehicleSecurity()->getAirbagNumber());
+        dump($vehicle?->getVehicleSecurity()?->getAirbagNumber());
         return new Response('<body></body>');
     }
 
@@ -37,7 +37,7 @@ class VehicleRelationsJoinController extends AbstractController
     public function testOneToOneWithJoinAndJoinConditionAction(EntityManagerInterface $em): Response
     {
         $vehicle = $em->getRepository(Vehicle::class)->findOneByPlateWithSecurityAnd4Stars('EB-423-MA');
-        dump($vehicle->getVehicleSecurity()->getAirbagNumber());
+        dump($vehicle?->getVehicleSecurity()?->getAirbagNumber());
         return new Response('<body></body>');
     }
 
@@ -56,7 +56,7 @@ class VehicleRelationsJoinController extends AbstractController
         $vehicle = $em->getRepository(Vehicle::class)->findOneByPlateWithModel('GA-928-GZ');
         // Cette fois-ci, Doctrine n'a pas besoin d'exécuter une seconde requête car
         // il "connaît" les données de VehicleModel
-        dump($vehicle->getVehicleModel()->getName());
+        dump($vehicle?->getVehicleModel()?->getName());
         return new Response('<body></body>');
     }
 
@@ -94,7 +94,7 @@ class VehicleRelationsJoinController extends AbstractController
     public function testManyToManyWithJoinAction(EntityManagerInterface $em): Response
     {
         $vehicle = $em->getRepository(Vehicle::class)->findOneByPlateWithEquipments('AZ-529-BJ');
-        foreach ($vehicle->getEquipments() as $equipment) {
+        foreach ($vehicle?->getEquipments() ?: [] as $equipment) {
             dump($equipment);
         }
         return new Response('<body></body>');

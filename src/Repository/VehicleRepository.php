@@ -45,7 +45,10 @@ class VehicleRepository extends ServiceEntityRepository
         // ... suite de notre méthode
     }
 
-    public function myFindAll(): mixed
+    /**
+     * @return Vehicle[]
+     */
+    public function myFindAll(): array
     {
         // Récupération du QueryBuilder ==> select * from vehicle
         $queryBuilder = $this->createQueryBuilder('v');
@@ -61,28 +64,35 @@ class VehicleRepository extends ServiceEntityRepository
         return $results;
     }
 
+    /**
+     * @return Vehicle[]
+     */
     // La même chose sans commentaires ni variables inutiles
-    public function myFindAllBis(): mixed
+    public function myFindAllBis(): array
     {
         return $this->createQueryBuilder('v')
             ->getQuery()
             ->getResult();
     }
 
-    public function myFind($id): mixed
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function myFind($id): ?Vehicle
     {
         $qb = $this->createQueryBuilder('v')
             // Ajout d'une contrainte sur la propriété id de l'entité v
             ->where('v.id = :my_id')
             // Attribution de la valeur au paramètre (id reçu en paramètre)
             ->setParameter('my_id', $id);
-        return $qb->getQuery()->getResult();
+        return $qb->getQuery()->getOneOrNullResult();
     }
 
     /**
+     * @return Vehicle[]
      * @throws Exception
      */
-    public function findByMileageAndYear($mileageMin, $mileageMax, $year): mixed
+    public function findByMileageAndYear($mileageMin, $mileageMax, $year): array
     {
         $qb = $this->createQueryBuilder('v')
             ->where('v.mileage >= :mileage_min')
@@ -96,9 +106,10 @@ class VehicleRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Vehicle[]
      * @throws Exception
      */
-    public function findByMileageAndYearBis($mileageMin, $mileageMax, $year): mixed
+    public function findByMileageAndYearBis($mileageMin, $mileageMax, $year): array
     {
         $qb = $this->createQueryBuilder('v')
             ->where('v.mileage >= :mileage_min')
@@ -110,9 +121,10 @@ class VehicleRepository extends ServiceEntityRepository
     }
 
     /**
+     * @return Vehicle[]
      * @throws Exception
      */
-    public function findByPriceAndYear($priceMin, $priceMax, $year): mixed
+    public function findByPriceAndYear($priceMin, $priceMax, $year): array
     {
         $qb = $this->createQueryBuilder('v')
             ->where('v.price >= :price_min')
@@ -134,16 +146,22 @@ class VehicleRepository extends ServiceEntityRepository
             ->setParameter('end', new DateTime($year . '-12-31'));
     }
 
-    public function myFindAllDql(): mixed
+    /**
+     * @return Vehicle[]
+     */
+    public function myFindAllDql(): array
     {
         return $this->_em->createQuery("SELECT v FROM App:Vehicle v")->getResult();
     }
 
-    public function myFindDql($id): mixed
+    /**
+     * @throws NonUniqueResultException
+     */
+    public function myFindDql($id): ?Vehicle
     {
         $query = $this->_em->createQuery("SELECT v FROM App:Vehicle v WHERE v.id = :id");
         $query->setParameter('id', $id);
-        return $query->getResult();
+        return $query->getOneOrNullResult();
     }
 
     public function myFindAllWithPaging($currentPage, $nbPerPage): Paginator
@@ -160,7 +178,7 @@ class VehicleRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneByPlateWithSecurity(string $plate): mixed
+    public function findOneByPlateWithSecurity(string $plate): ?Vehicle
     {
         return
             // SELECT v.* FROM vehicle v
@@ -186,7 +204,7 @@ class VehicleRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneByPlateWithSecurityAnd4Stars(string $plate): mixed
+    public function findOneByPlateWithSecurityAnd4Stars(string $plate): ?Vehicle
     {
         return $this->createQueryBuilder('v')
             ->where('v.plate=:plate')->setParameter('plate', $plate)
@@ -198,7 +216,7 @@ class VehicleRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneByPlateWithModel(string $plate): mixed
+    public function findOneByPlateWithModel(string $plate): ?Vehicle
     {
         return $this->createQueryBuilder('v')
             ->where('v.plate=:plate')->setParameter('plate', $plate)
@@ -210,7 +228,7 @@ class VehicleRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneByPlateWithEquipments(string $plate): mixed
+    public function findOneByPlateWithEquipments(string $plate): ?Vehicle
     {
         return $this->createQueryBuilder('v')
             ->where('v.plate=:plate')->setParameter('plate', $plate)

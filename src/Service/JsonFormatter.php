@@ -12,13 +12,13 @@ use Monolog\LogRecord;
 // le même contrat d'interface
 class JsonFormatter implements FormatterInterface
 {
-    public function format(LogRecord $record): mixed
+    public function format(LogRecord $record): string|false
     {
         // On se contente de faire simplement un json_encode
         return json_encode($record);
     }
 
-    public function formatBatch(array $records): mixed
+    public function formatBatch(array $records): string|false
     {
         // On se contente de faire simplement un json_encode
         return json_encode($records);

@@ -27,7 +27,7 @@ class VehicleModelRepository extends ServiceEntityRepository
     /**
      * @throws NonUniqueResultException
      */
-    public function findOneByNameWithVehicles(string $name): mixed
+    public function findOneByNameWithVehicles(string $name): ?VehicleModel
     {
         return $this->createQueryBuilder('m')
             ->where('m.name = :name')->setParameter('name', $name)
